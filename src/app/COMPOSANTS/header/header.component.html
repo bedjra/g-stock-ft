@@ -1,0 +1,39 @@
+<div class="header-container">
+  <div class="header-left">
+    <button class="menu-toggle btn" (click)="onToggleSidebar()">
+    </button>
+    <nav aria-label="breadcrumb">
+      <li class="breadcrumb-item active">
+        <span class="circle"></span> {{ currentPage }}
+      </li>
+    </nav>
+  </div>
+
+  <div class="header-right">
+    <div class="search-box">
+      <input type="text" class="form-control" placeholder="Faire votre recherche..." #searchInput>
+      <button class="search-btn">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+
+    <div class="notification-bell" (click)="toggleNotifications()">
+      <i class="fas fa-bell"></i>
+      <span class="badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
+    </div>
+
+    <div class="user-profile dropdown" [class.show]="userMenuOpen" (click)="toggleUserMenu()">
+      <div class="user-avatar">
+        {{ userInitials }}
+      </div>
+      <span class="d-none d-md-inline user-name">{{ userName }}</span>
+      <i class="fas fa-chevron-down"></i>
+
+      <div class="dropdown-menu" [class.show]="userMenuOpen">
+        <a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profil</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+      </div>
+    </div>
+  </div>
+</div>

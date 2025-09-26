@@ -1,0 +1,393 @@
+/* Onglets de navigation */
+.onglets {
+  display: flex;
+  gap: 110px;
+  margin-top: -10px;
+  padding: 6px 24px;
+  background-color: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* Lien de chaque onglet */
+.nav-link {
+  text-decoration: none;
+  color: #374151;
+  /* Gris foncé */
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+/* Effet au survol */
+.nav-link:hover {
+  color: #1d4ed8;
+  background-color: #e0e7ff;
+  /* Bleu clair */
+  transform: translateY(-1px);
+}
+
+/* Onglet actif */
+.nav-link.active {
+  color: #1d4ed8;
+  font-weight: 700;
+  border-bottom: 2px solid #1d4ed8;
+  padding-bottom: 6px;
+  background-color: #e0e7ff;
+}
+
+
+
+
+header {
+  width: 100%;
+  background-color: #c4d1df;
+  padding: 7px;
+  text-align: center;
+  color: rgb(14, 13, 13);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  gap: 30px;
+  /* un peu moins large pour meilleure cohérence */
+  flex-wrap: wrap;
+  /* pour gérer le responsive */
+}
+
+.container h4 {
+  font-size: 1.3rem;
+  color: rgb(71, 71, 73);
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.left-box {
+  flex: 1 1 370px;
+  /* largeur minimum 370px, flexible */
+  background-color: #f3f4f6;
+  color: black;
+  border-radius: 10px;
+  padding: 20px;
+  min-width: 370px;
+  box-sizing: border-box;
+}
+
+.right-box {
+  flex: 2 1 390px;
+  /* 2 fois plus large, min 390px */
+  background-color: #f3f4f6;
+  color: black;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-x: auto;
+  /* pour éviter débordement horizontal */
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #474949;
+}
+
+input[type="email"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+input[type="checkbox"] {
+  margin-right: 8px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.submit-btn {
+  background: linear-gradient(to right, #23a2f6, #1e90ff);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.submit-btn:disabled {
+  background-color: #a0c8f8;
+  cursor: not-allowed;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: 2px solid #ddd;
+  margin-top: 10px;
+}
+
+th,
+td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+th {
+  font-weight: 700;
+  color: rgb(71, 71, 73);
+  background-color: #e7eaf0;
+}
+
+tr:hover {
+  background-color: #f0f4f9;
+}
+
+p {
+  font-style: italic;
+  color: #666;
+  margin-top: 15px;
+}
+
+
+
+
+/* Media Query pour grands écrans >= 1440px */
+@media screen and (min-width: 1440px) {
+  .container {
+    max-width: 1400px;
+    gap: 50px;
+  }
+
+  .left-box {
+    flex-basis: 450px;
+    /* un peu plus large */
+  }
+
+  .right-box {
+    flex-basis: 700px;
+    /* plus large */
+  }
+
+  header {
+    font-size: 1.5rem;
+    padding: 12px 0;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/********************SCOLARITE**************************************/
+/* Déjà défini dans ton CSS global */
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.left-box,
+.right-box {
+  background-color: #f3f4f6;
+  color: black;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.left-box {
+  flex: 1 1 370px;
+  min-width: 370px;
+}
+
+.right-box {
+  flex: 2 1 390px;
+  overflow-x: auto;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #474949;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.submit-btn {
+  background: linear-gradient(to right, #23a2f6, #1e90ff);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.submit-btn:disabled {
+  background-color: #a0c8f8;
+  cursor: not-allowed;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: 2px solid #ddd;
+  margin-top: 10px;
+}
+
+th,
+td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+th {
+  font-weight: 700;
+  color: rgb(71, 71, 73);
+  background-color: #e7eaf0;
+}
+
+tr:hover {
+  background-color: #f0f4f9;
+}
+
+p {
+  font-style: italic;
+  color: #666;
+  margin-top: 15px;
+}
+
+
+
+
+
+
+
+/**********************/
+.config-card {
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+}
+
+.config-title {
+  text-align: left;
+  font-size: 1.4rem;
+  margin-bottom: 1.4rem;
+  color: #222;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.formgroup {
+  flex: 1 1 30%;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+}
+
+.form-group label {
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.form-group input[readonly] {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #f5f5f5;
+  color: #555;
+  font-size: 14px;
+  font-weight: bold;
+
+}
+
+/* Logo styling */
+.logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #fafafa;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  min-height: 70px;
+}
+
+.logo-img {
+  max-width: 100%;
+  max-height: 100px;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.05);
+}

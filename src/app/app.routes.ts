@@ -1,0 +1,27 @@
+import { Routes } from '@angular/router';
+import { Log } from './log/log';
+import { DashboardComponent } from './all/dashboard/dashboard.component';
+import { BaseComponent } from './COMPOSANTS/base/base.component';
+import { Parametres } from './all/parametres/parametres';
+import { Pdv } from './all/pdv/pdv';
+import { Reappro } from './all/reappro/reappro';
+import { Inventaire } from './all/inventaire/inventaire';
+import { Produit } from './all/produit/produit';
+
+export const routes: Routes = [
+    { path: '', redirectTo: 'login', pathMatch: 'full' }, // 🔁 redirection claire
+    { path: 'login', component: Log },
+    {
+        path: '',
+        component: BaseComponent,
+
+        children: [
+            { path: 'dashboard', component: DashboardComponent },
+            { path: 'pdv', component: Pdv },
+            { path: 'reappro', component: Reappro },
+            { path: 'inventaire', component: Inventaire },
+            { path: 'produit', component: Produit },
+            { path: 'parametre', component: Parametres },
+        ],
+    },
+];

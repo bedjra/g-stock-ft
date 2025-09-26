@@ -1,0 +1,101 @@
+<nav class="onglets">
+
+
+    <a (click)="ongletActif = 'config'" [ngClass]="{ 'active': ongletActif === 'config' }"
+        class="nav-link">Configuration</a>
+
+    <a (click)="ongletActif = 'scolarite'" [ngClass]="{ 'active': ongletActif === 'scolarite' }"
+        class="nav-link">Importation</a>
+
+
+
+    <a (click)="ongletActif = 'matiere'" [ngClass]="{ 'active': ongletActif === 'matiere' }"
+        class="nav-link">Utilisateur</a>
+
+    <!-- Onglet Utilisateur uniquement pour les NON-secrétaires -
+    <a *ngIf="roleConnecte !== 'SECRETAIRE'" (click)="ongletActif = 'utilisateur'"
+        [ngClass]="{ 'active': ongletActif === 'utilisateur' }" class="nav-link">Utilisateur</a>
+
+    --->
+</nav>
+
+
+
+
+<!-- Onglet Utilisateur 
+<div class="container" *ngIf="ongletActif === 'utilisateur' && roleConnecte !== 'SECRETAIRE'">
+    <div class="left-box">
+        <h4>{{ isEditMode ? 'Modifier un utilisateur' : 'Ajouter un utilisateur' }}</h4>
+        <form #formUser="ngForm" (ngSubmit)="isEditMode ? modifierUtilisateur() : ajouterUtilisateur()">
+            <div class="form-group">
+                <label for="roleUser">Rôle :</label>
+                <select id="roleUser" [(ngModel)]="credentials.role" name="role" required>
+                    <option value="" disabled selected>Sélectionnez un rôle</option>
+                    <option *ngFor="let r of roles" [value]="r">{{ r | titlecase }}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="emailUser">Email :</label>
+                <input type="email" id="emailUser" [(ngModel)]="credentials.email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="passwordUser">Mot de passe :</label>
+                <input [type]="passwordVisible ? 'text' : 'password'" id="passwordUser"
+                    [(ngModel)]="credentials.password" name="password" required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPasswordUser">Confirmer le mot de passe :</label>
+                <input [type]="passwordVisible ? 'text' : 'password'" id="confirmPasswordUser"
+                    [(ngModel)]="credentials.confirmPassword" name="confirmPassword" required autocomplete="off">
+            </div>
+
+
+
+            <button type="submit" class="submit-btn"
+                [disabled]="!formUser.valid || credentials.password !== credentials.confirmPassword">
+                {{ isEditMode ? 'Mettre à jour' : 'S\'inscrire' }}
+            </button>
+
+            <div *ngIf="credentials.password && credentials.confirmPassword && credentials.password !== credentials.confirmPassword"
+                style="color: red;">
+                Les mots de passe ne correspondent pas.
+            </div>
+        </form>
+    </div>
+
+    <div class="right-box">
+        <h4>Gestion des Utilisateurs</h4>
+        <table *ngIf="utilisateurs.length > 0">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Rôle</th>
+                    <th>Email</th>
+                    <th>Mdp</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let u of utilisateurs; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ u.role }}</td>
+                    <td>{{ u.email }}</td>
+                    <td>{{ u.password }}</td>
+
+             <th>Actions</th>
+
+                    <td>
+            <button (click)="remplirFormulairePourModification(u, i)">Modifier</button>
+            <button (click)="supprimerUtilisateur(i)">Supprimer</button>
+          </td>
+          
+                </tr>
+            </tbody>
+        </table>
+        <p *ngIf="utilisateurs.length === 0">Aucun utilisateur trouvé.</p>
+    </div>
+</div>
+
+-->
