@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -10,30 +11,58 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   @Input() currentPage = 'Tableau de bord';
+
   @Output() toggleSidebar = new EventEmitter<void>();
   @Output() searchQuery = new EventEmitter<string>();
 
-/*  searchQuery_internal = '';*/
+  collapsed = false;
+
   userMenuOpen = false;
   notificationCount = 3;
 
-  // 🔧 Ces deux lignes manquaient !
   userName: string = 'Utilisateur';
   userInitials: string = '?';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    // Écouter les changements de route pour mettre à jour le breadcrumb
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        const url = event.urlAfterRedirects;
+        switch (url) {
+          case '/dashboard':
+            this.currentPage = 'Tableau de bord';
+            break;
+          case '/produit':
+            this.currentPage = 'Produits';
+            break;
+          case '/pdv':
+            this.currentPage = 'Point de Vente';
+            break;
+          case '/inventaire':
+            this.currentPage = 'Inventaires';
+            break;
+          case '/reappro':
+            this.currentPage = 'Réapprovisionnement';
+            break;
+          case '/parametre':
+            this.currentPage = 'Paramètres';
+            break;
+          default:
+            this.currentPage = '';
+        }
+      });
+  }
 
   ngOnInit(): void {
+    // Récupérer l'utilisateur depuis localStorage
     const userString = localStorage.getItem('user');
     if (userString) {
       const user = JSON.parse(userString);
       this.userName = user.role ?? 'Utilisateur';
       this.userInitials = user.role?.charAt(0).toUpperCase() ?? '?';
-    } else {
-      this.userName = 'Utilisateur';
-      this.userInitials = '?';
     }
   }
 
@@ -41,12 +70,6 @@ export class HeaderComponent implements OnInit {
     this.toggleSidebar.emit();
   }
 
-/*  onSearch(): void {
-    if (this.searchQuery_internal.trim()) {
-      this.searchQuery.emit(this.searchQuery_internal);
-    }
-  }
-*/
   toggleUserMenu(): void {
     this.userMenuOpen = !this.userMenuOpen;
   }

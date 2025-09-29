@@ -1,1 +1,56 @@
-<p>reappro works!</p>
+<div class="container">
+    <h2 class="title">Nouveau Réapprovisionnement</h2>
+
+    <div class="grid">
+        <!-- Bloc gauche : Scanner un produit -->
+        <div class="card">
+            <h3 class="card-title">📦 Infos du produit</h3>
+
+            <div class="form-group">
+                <label for="lieu">Produit</label>
+                <select id="lieu">
+                    <option value="">Sélectionner un produit...</option>
+                    <option value="magasin">Magasin</option>
+                    <option value="boutique">Boutique</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="quantite">Quantité</label>
+                <input id="quantite" type="number" value="1" />
+            </div>
+
+
+
+            <button class="btn-primary">Ajouter</button>
+        </div>
+
+        <!-- Bloc droit : Produits de l’arrivage -->
+        <div class="card">
+            <h3 class="card-title">🚚 Produits de l’arrivage</h3>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Produit</th>
+                        <th>Quantité</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="4" class="empty">Aucun produit ajouté.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="footer">
+                <button class="btn-secondary">
+                    💾 Enregistrer l'arrivage du  {{ today }}
+                </button>
+            </div>
+
+
+        </div>
+    </div>
+</div>

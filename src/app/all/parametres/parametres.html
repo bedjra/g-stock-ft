@@ -4,13 +4,14 @@
     <a (click)="ongletActif = 'config'" [ngClass]="{ 'active': ongletActif === 'config' }"
         class="nav-link">Configuration</a>
 
-    <a (click)="ongletActif = 'scolarite'" [ngClass]="{ 'active': ongletActif === 'scolarite' }"
+    <a (click)="ongletActif = 'importation'" [ngClass]="{ 'active': ongletActif === 'scolarite' }"
         class="nav-link">Importation</a>
 
 
 
-    <a (click)="ongletActif = 'matiere'" [ngClass]="{ 'active': ongletActif === 'matiere' }"
-        class="nav-link">Utilisateur</a>
+    <a (click)="ongletActif = 'Utilisateur'" [ngClass]="{ 'active': ongletActif === 'matiere' }" class="nav-link">
+        <i class="icon">👤</i> Utilisateurs
+    </a>
 
     <!-- Onglet Utilisateur uniquement pour les NON-secrétaires -
     <a *ngIf="roleConnecte !== 'SECRETAIRE'" (click)="ongletActif = 'utilisateur'"
@@ -99,3 +100,63 @@
 </div>
 
 -->
+
+
+<div class="container" *ngIf="ongletActif === 'importation' ">
+
+    <div class="section">
+        <h3 class="section-title">Importer des produits</h3>
+        <p class="section-desc">
+            Ajoutez ou mettez à jour des produits en masse à partir d'un fichier Excel (.xlsx, .csv).
+        </p>
+
+        <label class="btn-upload">
+            📂 Importer un fichier
+            <input type="file" hidden accept=".xlsx,.csv" />
+        </label>
+    </div>
+</div>
+
+<div class="container" *ngIf="ongletActif === 'config' ">
+
+  <form (ngSubmit)="onSubmit()">
+
+    <!-- Nom -->
+    <div class="form-group">
+      <label>Nom de l'organisation</label>
+      <input type="text" [(ngModel)]="organisation.nom" name="nom" />
+    </div>
+
+    <!-- URL Logo -->
+    <div class="form-group">
+      <label>URL du logo</label>
+      <input type="text" [(ngModel)]="organisation.logoUrl" name="logoUrl" />
+    </div>
+
+    <!-- Adresse + Ville -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>Adresse</label>
+        <input type="text" [(ngModel)]="organisation.adresse" name="adresse" />
+      </div>
+      <div class="form-group">
+        <label>Ville</label>
+        <input type="text" [(ngModel)]="organisation.ville" name="ville" />
+      </div>
+    </div>
+
+    <!-- Téléphone + Email -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>Numéro de téléphone</label>
+        <input type="text" [(ngModel)]="organisation.telephone" name="telephone" />
+      </div>
+      <div class="form-group">
+        <label>Email de contact</label>
+        <input type="email" [(ngModel)]="organisation.email" name="email" />
+      </div>
+    </div>
+
+    <button class="btn" type="submit">Sauvegarder les changements</button>
+  </form>
+</div>

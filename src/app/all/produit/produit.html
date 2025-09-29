@@ -1,1 +1,60 @@
-<p>produit works!</p>
+<div class="container">
+
+
+  <div class="header">
+    <h1>Gestion des Produits</h1>
+    <div class="search-box">
+      <input type="text" placeholder="Rechercher par nom/référence..." />
+    </div>
+    <button class="btn" (click)="openModal()">+ Ajouter</button>
+  </div>
+
+  <!-- Tableau des produits -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nom</th>
+          <th>Référence</th>
+          <th>Quantité</th>
+          <th>Prix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Id">1</td>
+          <td data-label="Nom du Produit">ALTERNATEUR HOWO</td>
+          <td data-label="Référence">WG1095094002</td>
+          <td data-label="Quantité">3</td>
+          <td data-label="Prix Unitaire">50 000</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ✅ Modal -->
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>Ajouter un produit</h2>
+
+    <form (ngSubmit)="ajouterProduit()" #produitForm="ngForm">
+      <label>Nom</label>
+      <input type="text" name="nom" [(ngModel)]="nouveauProduit.nom" required />
+
+      <label>Référence</label>
+      <input type="text" name="reference" [(ngModel)]="nouveauProduit.reference" required />
+
+      <label>Quantité</label>
+      <input type="number" name="quantite" [(ngModel)]="nouveauProduit.quantite" required />
+
+      <label>Prix Unitaire</label>
+      <input type="number" name="prixUnitaire" [(ngModel)]="nouveauProduit.prixUnitaire" required />
+
+
+      <button type="submit" class="btn">Enregistrer</button>
+    </form>
+  </div>
+</div>

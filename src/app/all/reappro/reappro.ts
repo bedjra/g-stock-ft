@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './reappro.css'
 })
 export class Reappro {
+  today = new Date().toLocaleDateString('fr-FR'); // exemple : 28/09/2025
 
 }
