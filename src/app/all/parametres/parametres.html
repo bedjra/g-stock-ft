@@ -1,18 +1,14 @@
 <nav class="onglets">
 
+    <a *ngIf="roleConnecte !== 'SECRETAIRE'" (click)="ongletActif = 'utilisateur'"
+        [ngClass]="{ 'active': ongletActif === 'utilisateur' }" class="nav-link">
+        <i class="icon">👤</i> Utilisateur</a>
 
     <a (click)="ongletActif = 'config'" [ngClass]="{ 'active': ongletActif === 'config' }"
         class="nav-link">Configuration</a>
 
     <a (click)="ongletActif = 'importation'" [ngClass]="{ 'active': ongletActif === 'scolarite' }"
         class="nav-link">Importation</a>
-
-
-
-
-    <a *ngIf="roleConnecte !== 'SECRETAIRE'" (click)="ongletActif = 'utilisateur'"
-        [ngClass]="{ 'active': ongletActif === 'utilisateur' }" class="nav-link">
-        <i class="icon">👤</i> Utilisateur</a>
 
 </nav>
 
@@ -32,8 +28,8 @@
             </div>
 
             <div class="form-group">
-                <label for="emailUser">Email :</label>
-                <input type="email" id="emailUser" [(ngModel)]="credentials.email" name="email" required>
+                <label for="emailUser">Nom :</label>
+                <input type="text" id="emailUser" [(ngModel)]="credentials.email" name="email" required>
             </div>
 
             <div class="form-group">
@@ -69,7 +65,7 @@
                 <tr>
                     <th>Id</th>
                     <th>Rôle</th>
-                    <th>Email</th>
+                    <th>Nom</th>
                     <th>Mdp</th>
                     <th>Actions</th>
                 </tr>
@@ -99,6 +95,62 @@
     </div>
 </div>
 
+<div class="container" *ngIf="ongletActif === 'config'">
+    <div class="left-box">
+        <form (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label>Nom de l'entreprise</label>
+                <input type="text" [(ngModel)]="organisation.nom" name="nom" />
+            </div>
+
+            <div class="form-group">
+                <label>Logo</label>
+                <input type="file" accept="image/*" (change)="onLogoSelected($event)" />
+            </div>
+
+            <!-- Aperçu de l’image choisie -->
+            <div *ngIf="organisation.logoUrl" class="preview-logo">
+                <img [src]="organisation.logoUrl" alt="Logo organisation" />
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label>Adresse</label>
+                    <input type="text" [(ngModel)]="organisation.ville" name="ville" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Téléphone1</label>
+                    <input type="text" [(ngModel)]="organisation.telephone" name="telephone" />
+                </div>
+                <div class="form-group">
+                    <label>Téléphone2</label>
+                    <input type="text" [(ngModel)]="organisation.telephone" name="telephone" />
+                </div>
+            </div>
+
+            <button class="submit-btn" type="submit">Sauvegarder</button>
+        </form>
+    </div>
+
+    <div class="right-box">
+        <h4>Aperçu de l'organisation</h4>
+        <div class="preview-box" *ngIf="organisation.nom || organisation.email">
+            <p><strong>Nom :</strong> {{ organisation.nom }}</p>
+            <p><strong>Adresse :</strong> {{ organisation.adresse }} - {{ organisation.ville }}</p>
+            <p><strong>Téléphone :</strong> {{ organisation.telephone }}</p>
+            <p><strong>Email :</strong> {{ organisation.email }}</p>
+            <p><strong>Logo :</strong></p>
+            <img *ngIf="organisation.logoUrl" [src]="organisation.logoUrl" alt="Logo organisation"
+                style="max-height:80px;">
+        </div>
+        <p *ngIf="!organisation.nom && !organisation.email">Aucune information enregistrée.</p>
+    </div>
+</div>
 
 
 <div class="container" *ngIf="ongletActif === 'importation' ">
@@ -114,48 +166,4 @@
             <input type="file" hidden accept=".xlsx,.csv" />
         </label>
     </div>
-</div>
-
-<div class="container" *ngIf="ongletActif === 'config' ">
-
-    <form (ngSubmit)="onSubmit()">
-
-        <!-- Nom -->
-        <div class="form-group">
-            <label>Nom de l'organisation</label>
-            <input type="text" [(ngModel)]="organisation.nom" name="nom" />
-        </div>
-
-        <!-- URL Logo -->
-        <div class="form-group">
-            <label>URL du logo</label>
-            <input type="text" [(ngModel)]="organisation.logoUrl" name="logoUrl" />
-        </div>
-
-        <!-- Adresse + Ville -->
-        <div class="form-row">
-            <div class="form-group">
-                <label>Adresse</label>
-                <input type="text" [(ngModel)]="organisation.adresse" name="adresse" />
-            </div>
-            <div class="form-group">
-                <label>Ville</label>
-                <input type="text" [(ngModel)]="organisation.ville" name="ville" />
-            </div>
-        </div>
-
-        <!-- Téléphone + Email -->
-        <div class="form-row">
-            <div class="form-group">
-                <label>Numéro de téléphone</label>
-                <input type="text" [(ngModel)]="organisation.telephone" name="telephone" />
-            </div>
-            <div class="form-group">
-                <label>Email de contact</label>
-                <input type="email" [(ngModel)]="organisation.email" name="email" />
-            </div>
-        </div>
-
-        <button class="btn" type="submit">Sauvegarder les changements</button>
-    </form>
 </div>
