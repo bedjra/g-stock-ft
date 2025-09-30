@@ -2,13 +2,13 @@
 
     <a *ngIf="roleConnecte !== 'SECRETAIRE'" (click)="ongletActif = 'utilisateur'"
         [ngClass]="{ 'active': ongletActif === 'utilisateur' }" class="nav-link">
-        <i class="icon">👤</i> Utilisateur</a>
+        👤 Utilisateur</a>
 
-    <a (click)="ongletActif = 'config'" [ngClass]="{ 'active': ongletActif === 'config' }"
-        class="nav-link">Configuration</a>
+    <a (click)="ongletActif = 'config'" [ngClass]="{ 'active': ongletActif === 'config' }" class="nav-link"> <i
+            class="fas fa-cog"></i>    Configuration</a>
 
     <a (click)="ongletActif = 'importation'" [ngClass]="{ 'active': ongletActif === 'scolarite' }"
-        class="nav-link">Importation</a>
+        class="nav-link">📂  Importation</a>
 
 </nav>
 
@@ -96,23 +96,23 @@
 </div>
 
 <div class="container" *ngIf="ongletActif === 'config'">
-  <div class="left-box">
-    <!-- Logo de l'organisation -->
-    <div *ngIf="organisation.logoUrl" class="preview-logo">
-      <img [src]="organisation.logoUrl" alt="Logo organisation" style="max-width:150px;">
+    <div class="left-box">
+        <!-- Logo de l'organisation -->
+        <div *ngIf="organisation.logoUrl" class="preview-logo">
+            <img [src]="organisation.logoUrl" alt="Logo organisation" style="max-width:150px;">
+        </div>
     </div>
-  </div>
 
-  <div class="right-box">
-    <h4>Aperçu de l'organisation</h4>
-    <div class="preview-box" *ngIf="organisation.nom ">
-      <p><strong>Nom :</strong> {{ organisation.nom }}</p>
-      <p><strong>Adresse :</strong> {{ organisation.adresse }} </p>
-      <p><strong>Téléphone1 :</strong> {{ organisation.tel1 }}</p>
-      <p><strong>Téléphone2 :</strong> {{ organisation.tel2 }}</p>
+    <div class="right-box">
+        <h4>Aperçu de l'organisation</h4>
+        <div class="preview-box" *ngIf="organisation.nom ">
+            <p><strong>Nom :</strong> {{ organisation.nom }}</p>
+            <p><strong>Adresse :</strong> {{ organisation.adresse }} </p>
+            <p><strong>Téléphone1 :</strong> {{ organisation.tel1 }}</p>
+            <p><strong>Téléphone2 :</strong> {{ organisation.tel2 }}</p>
+        </div>
+        <p *ngIf="!organisation.nom && !organisation.tel1">Aucune information enregistrée.</p>
     </div>
-    <p *ngIf="!organisation.nom && !organisation.tel1">Aucune information enregistrée.</p>
-  </div>
 </div>
 
 

@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./parametres.css'],
 })
 export class Parametres {
-  ongletActif: string = 'config';
+  ongletActif: string = 'utilisateur';
   isLoading = true;
 
   // Formulaire
