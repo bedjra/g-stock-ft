@@ -10,6 +10,17 @@ export interface Utilisateur {
   role?: string;
 }
 
+export interface Organisation {
+   id?: number;
+  nom?: string;
+  logo?: any; // byte[] venant du backend
+  logoUrl?: string; // champ calculé pour Angular
+  adresse?: string;
+  tel1?: string;
+  tel2?: string;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,46 +29,42 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
 
-  // 🔹 Login
   login(credentials: { email: string; password: string }): Observable<Utilisateur> {
     return this.http.post<Utilisateur>(`${this.baseUrl}/user/login`, credentials);
   }
 
-  // 🔹 Récupérer tous les utilisateurs
   getAllUsers(): Observable<Utilisateur[]> {
     return this.http.get<Utilisateur[]>(`${this.baseUrl}/user`);
   }
 
-  // 🔹 Récupérer les rôles disponibles
   getRoles(): Observable<string[]> {
     return this.http.get<string[]>(`${this.baseUrl}/user/roles`);
   }
 
-  // 🔹 Récupérer le rôle d’un utilisateur via email
   getRoleByEmail(email: string): Observable<string> {
     return this.http.get<string>(`${this.baseUrl}/user/role/${email}`);
   }
 
-  // 🔹 Récupérer l’utilisateur connecté
   getCurrentUser(): Observable<Utilisateur> {
     return this.http.get<Utilisateur>(`${this.baseUrl}/user/info`);
   }
 
-  // 🔹 Modifier un utilisateur
-  updatUser(id: number, data: { email: string; password: string; role: string }): Observable<Utilisateur> {
+  updateUser(id: number, data: { email: string; password: string; role: string }): Observable<Utilisateur> {
     return this.http.put<Utilisateur>(`${this.baseUrl}/user/${id}`, data);
   }
-updateUser(id: number, data: { email: string; password: string; role: string }): Observable<Utilisateur> {
-  return this.http.put<Utilisateur>(`${this.baseUrl}/user/${id}`, data);
-}
 
-  // 🔹 Supprimer un utilisateur
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/user/${id}`);
   }
 
-  // 🔹 Inscription d’un utilisateur
   registerUser(data: { email: string; password: string; role: string }): Observable<Utilisateur> {
     return this.http.post<Utilisateur>(`${this.baseUrl}/user/save`, data);
   }
+
+
+  getOrganisation(): Observable<Organisation> {
+    return this.http.get<Organisation>(this.baseUrl);
+  }
+
+
 }

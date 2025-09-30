@@ -96,61 +96,25 @@
 </div>
 
 <div class="container" *ngIf="ongletActif === 'config'">
-    <div class="left-box">
-        <form (ngSubmit)="onSubmit()">
-            <div class="form-group">
-                <label>Nom de l'entreprise</label>
-                <input type="text" [(ngModel)]="organisation.nom" name="nom" />
-            </div>
-
-            <div class="form-group">
-                <label>Logo</label>
-                <input type="file" accept="image/*" (change)="onLogoSelected($event)" />
-            </div>
-
-            <!-- Aperçu de l’image choisie -->
-            <div *ngIf="organisation.logoUrl" class="preview-logo">
-                <img [src]="organisation.logoUrl" alt="Logo organisation" />
-            </div>
-
-
-            <div class="form-row">
-
-                <div class="form-group">
-                    <label>Adresse</label>
-                    <input type="text" [(ngModel)]="organisation.ville" name="ville" />
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Téléphone1</label>
-                    <input type="text" [(ngModel)]="organisation.telephone" name="telephone" />
-                </div>
-                <div class="form-group">
-                    <label>Téléphone2</label>
-                    <input type="text" [(ngModel)]="organisation.telephone" name="telephone" />
-                </div>
-            </div>
-
-            <button class="submit-btn" type="submit">Sauvegarder</button>
-        </form>
+  <div class="left-box">
+    <!-- Logo de l'organisation -->
+    <div *ngIf="organisation.logoUrl" class="preview-logo">
+      <img [src]="organisation.logoUrl" alt="Logo organisation" style="max-width:150px;">
     </div>
+  </div>
 
-    <div class="right-box">
-        <h4>Aperçu de l'organisation</h4>
-        <div class="preview-box" *ngIf="organisation.nom || organisation.email">
-            <p><strong>Nom :</strong> {{ organisation.nom }}</p>
-            <p><strong>Adresse :</strong> {{ organisation.adresse }} - {{ organisation.ville }}</p>
-            <p><strong>Téléphone :</strong> {{ organisation.telephone }}</p>
-            <p><strong>Email :</strong> {{ organisation.email }}</p>
-            <p><strong>Logo :</strong></p>
-            <img *ngIf="organisation.logoUrl" [src]="organisation.logoUrl" alt="Logo organisation"
-                style="max-height:80px;">
-        </div>
-        <p *ngIf="!organisation.nom && !organisation.email">Aucune information enregistrée.</p>
+  <div class="right-box">
+    <h4>Aperçu de l'organisation</h4>
+    <div class="preview-box" *ngIf="organisation.nom ">
+      <p><strong>Nom :</strong> {{ organisation.nom }}</p>
+      <p><strong>Adresse :</strong> {{ organisation.adresse }} </p>
+      <p><strong>Téléphone1 :</strong> {{ organisation.tel1 }}</p>
+      <p><strong>Téléphone2 :</strong> {{ organisation.tel2 }}</p>
     </div>
+    <p *ngIf="!organisation.nom && !organisation.tel1">Aucune information enregistrée.</p>
+  </div>
 </div>
+
 
 
 <div class="container" *ngIf="ongletActif === 'importation' ">

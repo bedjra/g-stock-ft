@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./parametres.css'],
 })
 export class Parametres {
-  ongletActif: string = 'utilisateur';
+  ongletActif: string = 'config';
   isLoading = true;
 
   // Formulaire
@@ -186,20 +186,6 @@ export class Parametres {
     telephone: '',
     email: ''
   };
-  
-  onLogoSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        this.organisation.logoUrl = reader.result as string; // DataURL (base64)
-      };
-
-      reader.readAsDataURL(file); // convertit en DataURL utilisable dans <img>
-    }
-  }
 
   onSubmit() {
 
