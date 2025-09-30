@@ -1,16 +1,18 @@
 <div class="container">
 
-
   <div class="header">
     <h1>Gestion des Produits</h1>
+
+    <!-- Recherche -->
     <div class="search-box">
-      <input type="text" placeholder="Rechercher par nom/référence..." />
+      <input type="text" placeholder="Rechercher par nom ou référence..." [(ngModel)]="searchTerm" (input)="rechercherProduit()" />
     </div>
+
     <button class="btn" (click)="openModal()">+ Ajouter</button>
   </div>
 
   <!-- Tableau des produits -->
-  <div class="table-container">
+  <div class="table-container" *ngIf="produits && produits.length > 0; else noData">
     <table>
       <thead>
         <tr>
@@ -22,16 +24,20 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td data-label="Id">1</td>
-          <td data-label="Nom du Produit">ALTERNATEUR HOWO</td>
-          <td data-label="Référence">WG1095094002</td>
-          <td data-label="Quantité">3</td>
-          <td data-label="Prix Unitaire">50 000</td>
+        <tr *ngFor="let produit of produits">
+          <td data-label="Id">{{ produit.id }}</td>
+          <td data-label="Nom du Produit">{{ produit.nom }}</td>
+          <td data-label="Référence">{{ produit.ref }}</td>
+          <td data-label="Quantité">{{ produit.qte }}</td>
+          <td data-label="Prix Unitaire">{{ produit.prix | number:'1.0-0' }}</td>
         </tr>
       </tbody>
     </table>
   </div>
+
+  <ng-template #noData>
+    <p>Aucun produit trouvé.</p>
+  </ng-template>
 </div>
 
 <!-- ✅ Modal -->
@@ -45,14 +51,13 @@
       <input type="text" name="nom" [(ngModel)]="nouveauProduit.nom" required />
 
       <label>Référence</label>
-      <input type="text" name="reference" [(ngModel)]="nouveauProduit.reference" required />
+      <input type="text" name="reference" [(ngModel)]="nouveauProduit.ref" required />
 
       <label>Quantité</label>
-      <input type="number" name="quantite" [(ngModel)]="nouveauProduit.quantite" required />
+      <input type="number" name="quantite" [(ngModel)]="nouveauProduit.qte" required />
 
       <label>Prix Unitaire</label>
-      <input type="number" name="prixUnitaire" [(ngModel)]="nouveauProduit.prixUnitaire" required />
-
+      <input type="number" name="prixUnitaire" [(ngModel)]="nouveauProduit.prix" required />
 
       <button type="submit" class="btn">Enregistrer</button>
     </form>

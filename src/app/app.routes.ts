@@ -6,7 +6,7 @@ import { Parametres } from './all/parametres/parametres';
 import { Pdv } from './all/pdv/pdv';
 import { Reappro } from './all/reappro/reappro';
 import { Inventaire } from './all/inventaire/inventaire';
-import { Produit } from './all/produit/produit';
+import { ProduitComponent } from './all/produit/produit';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' }, // 🔁 redirection claire
@@ -20,7 +20,7 @@ export const routes: Routes = [
             { path: 'pdv', component: Pdv },
             { path: 'reappro', component: Reappro },
             { path: 'inventaire', component: Inventaire },
-            { path: 'produit', component: Produit },
+            { path: 'produit', component: ProduitComponent },
             { path: 'parametre', component: Parametres },
         ],
     },

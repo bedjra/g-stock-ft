@@ -312,8 +312,7 @@ h2 {
 }
 
 .btn {
-  background: #0d6efd;
-  color: #fff;
+  color: #0a0909;
   padding: 12px 18px;
   border: none;
   border-radius: 6px;
@@ -321,4 +320,282 @@ h2 {
   font-size: 15px;
   font-weight: 600;
 }
+
+
+
+
+header {
+  width: 100%;
+  background-color: #c4d1df;
+  padding: 7px;
+  text-align: center;
+  color: rgb(14, 13, 13);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  gap: 30px;
+  /* un peu moins large pour meilleure cohérence */
+  flex-wrap: wrap;
+  /* pour gérer le responsive */
+}
+
+.container h4 {
+  font-size: 1.3rem;
+  color: rgb(71, 71, 73);
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.left-box {
+  flex: 1 1 370px;
+  /* largeur minimum 370px, flexible */
+  background-color: #f3f4f6;
+  color: black;
+  border-radius: 10px;
+  padding: 20px;
+  min-width: 370px;
+  box-sizing: border-box;
+}
+
+.right-box {
+  flex: 2 1 390px;
+  /* 2 fois plus large, min 390px */
+  background-color: #f3f4f6;
+  color: black;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-x: auto;
+  /* pour éviter débordement horizontal */
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #474949;
+}
+
+input[type="email"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+input[type="checkbox"] {
+  margin-right: 8px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.submit-btn {
+  background: linear-gradient(to right, #23a2f6, #1e90ff);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.submit-btn:disabled {
+  background-color: #a0c8f8;
+  cursor: not-allowed;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: 2px solid #ddd;
+  margin-top: 10px;
+}
+
+th,
+td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+th {
+  font-weight: 700;
+  color: rgb(71, 71, 73);
+  background-color: #e7eaf0;
+}
+
+tr:hover {
+  background-color: #f0f4f9;
+}
+
+p {
+  font-style: italic;
+  color: #666;
+  margin-top: 15px;
+}
+
+
+
+
+/* Media Query pour grands écrans >= 1440px */
+@media screen and (min-width: 1440px) {
+  .container {
+    max-width: 1400px;
+    gap: 50px;
+  }
+
+  .left-box {
+    flex-basis: 450px;
+    /* un peu plus large */
+  }
+
+  .right-box {
+    flex-basis: 700px;
+    /* plus large */
+  }
+
+  header {
+    font-size: 1.5rem;
+    padding: 12px 0;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/********************SCOLARITE**************************************/
+/* Déjà défini dans ton CSS global */
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.left-box,
+.right-box {
+  background-color: #f3f4f6;
+  color: black;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.left-box {
+  flex: 1 1 370px;
+  min-width: 370px;
+}
+
+.right-box {
+  flex: 2 1 390px;
+  overflow-x: auto;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #474949;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.submit-btn {
+  background: linear-gradient(to right, #23a2f6, #1e90ff);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.submit-btn:disabled {
+  background-color: #a0c8f8;
+  cursor: not-allowed;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: 2px solid #ddd;
+  margin-top: 10px;
+}
+
+th,
+td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+th {
+  font-weight: 700;
+  color: rgb(71, 71, 73);
+  background-color: #e7eaf0;
+}
+
+tr:hover {
+  background-color: #f0f4f9;
+}
+
+p {
+  font-style: italic;
+  color: #666;
+  margin-top: 15px;
+}
+
+
+
+
+
 
