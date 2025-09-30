@@ -20,7 +20,7 @@ export class Log {
   loading = false;
   errorMessage = '';
 
-  constructor(private router: Router, private loginService: LoginService) {}
+  constructor(private router: Router, private loginService: LoginService) { }
 
   onLogin(): void {
     if (!this.credentials.email || !this.credentials.password) {
@@ -45,7 +45,7 @@ export class Log {
       error: (err) => {
         this.loading = false;
         console.error('Erreur de connexion', err);
-        this.errorMessage = 'Nom d’utilisateur ou mot de passe incorrect.';
+      alert('Nom d’utilisateur ou mot de passe incorrect.');
       },
     });
   }

@@ -58,12 +58,18 @@ export class HeaderComponent {
 
   ngOnInit(): void {
     // Récupérer l'utilisateur depuis localStorage
-    const userString = localStorage.getItem('user');
-    if (userString) {
-      const user = JSON.parse(userString);
-      this.userName = user.role ?? 'Utilisateur';
-      this.userInitials = user.role?.charAt(0).toUpperCase() ?? '?';
-    }
+  const userString = localStorage.getItem('currentUser'); // ✅ même clé que dans le login
+  if (userString) {
+    const user = JSON.parse(userString);
+    
+    // ⚡ Utilise son email ou un autre champ comme nom
+    this.userName = user.email ?? 'Utilisateur';  
+
+    // ⚡ Initiales à partir de l’email ou nom
+    this.userInitials = user.email
+      ? user.email.charAt(0).toUpperCase()
+      : '?';
+  }
   }
 
   onToggleSidebar(): void {
@@ -79,8 +85,9 @@ export class HeaderComponent {
   }
 
   logout(): void {
-    localStorage.removeItem('user');
-    this.userMenuOpen = false;
-    this.router.navigate(['/login']);
-  }
+  localStorage.removeItem('currentUser'); 
+  this.userMenuOpen = false;
+  this.router.navigate(['/login']);
+}
+
 }
