@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 export interface Utilisateur {
   id?: number;
@@ -13,7 +14,7 @@ export interface Utilisateur {
   providedIn: 'root'
 })
 export class LoginService {
-  private baseUrl = 'http://localhost:8060/api'; // URL backend
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 

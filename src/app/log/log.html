@@ -19,10 +19,10 @@
             <form (ngSubmit)="onLogin()" #loginForm="ngForm">
 
                 <div class="form-group">
-                    <label for="username">Nom :</label>
-                    <input type="text" id="username" [(ngModel)]="credentials.username" name="username" required
-                        #username="ngModel" />
-                    <div *ngIf="username.invalid && username.touched" class="error">
+                    <label for="email">Nom :</label>
+                    <input type="text" id="email" [(ngModel)]="credentials.email" name="email" required
+                        #email="ngModel" />
+                    <div *ngIf="email.invalid && email.touched" class="error">
                         Le nom est requis.
                     </div>
                 </div>

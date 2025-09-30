@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { LoginService, Utilisateur } from '../SERVICE/login-service';
 
 @Component({
   selector: 'app-log',
@@ -11,28 +12,41 @@ import { Router } from '@angular/router';
   styleUrls: ['./log.css'],
 })
 export class Log {
-  // Préremplissage
   credentials = {
-    username: 'user',
-    password: '12',
+    email: '',  // ⚡ utilise email au lieu de username pour correspondre à ton backend
+    password: '',
   };
 
-  constructor(private router: Router) {}
+  loading = false;
+  errorMessage = '';
+
+  constructor(private router: Router, private loginService: LoginService) {}
 
   onLogin(): void {
-    // Vérification côté frontend
-    if (!this.credentials.username || !this.credentials.password) {
-      alert('Veuillez remplir tous les champs.');
+    if (!this.credentials.email || !this.credentials.password) {
+      this.errorMessage = 'Veuillez remplir tous les champs.';
       return;
     }
 
-    // Login "mock"
-    if (this.credentials.username === 'user' && this.credentials.password === '12') {
-      alert('Connexion réussie ! Bienvenue ' + this.credentials.username);
-      // Ici tu peux rediriger vers un "dashboard" fictif
-       this.router.navigate(['/dashboard']);
-    } else {
-      alert('Nom ou mot de passe incorrect.');
-    }
+    this.loading = true;
+    this.errorMessage = '';
+
+    this.loginService.login(this.credentials).subscribe({
+      next: (user: Utilisateur) => {
+        this.loading = false;
+        alert('Connexion réussie ! Bienvenue ' + user.email);
+
+        // 🔹 Exemple : stocker l'utilisateur connecté dans localStorage
+        localStorage.setItem('currentUser', JSON.stringify(user));
+
+        // Redirection après login
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error('Erreur de connexion', err);
+        this.errorMessage = 'Nom d’utilisateur ou mot de passe incorrect.';
+      },
+    });
   }
 }
