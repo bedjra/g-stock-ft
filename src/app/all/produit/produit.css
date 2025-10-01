@@ -8,7 +8,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Header */
 .header {
     display: flex;
     justify-content: space-between;
@@ -33,24 +32,20 @@ h1 {
 }
 
 .btn {
-    background: #3b57f3;
-    color: white;
+    color: rgb(9, 9, 9);
     border: none;
-    padding: 10px 16px;
+    padding: 5px 10px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
 }
 
-.btn:hover {
-    background: #2a46d3;
-}
+
 
 /* Table */
 .table-container {
     background: white;
     border-radius: 8px;
-    overflow: hidden;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -66,7 +61,7 @@ thead {
 th,
 td {
     padding: 12px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #eaeaea;
 }
 
@@ -128,29 +123,11 @@ td.stock {
 
 
 
-
-/* Bouton */
-.btn {
-    background: #3b57f3;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 30px;
-    font-size: 14px;
-}
-
-.btn:hover {
-    background: #2a46d3;
-}
-
 h2 {
     padding-bottom: 20px;
 
 }
 
-/* Modal */
 .modal {
     position: fixed;
     top: 0;

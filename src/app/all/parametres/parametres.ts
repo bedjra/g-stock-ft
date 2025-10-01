@@ -190,4 +190,41 @@ export class Parametres {
   onSubmit() {
 
   }
+
+  file!: File;
+  fileName: string = '';
+  message: string = '';
+
+
+
+  onFileSelected(event: any) {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      this.file = selectedFile;
+      this.fileName = selectedFile.name;
+      this.message = '';
+    }
+  }
+
+  uploadFile() {
+    if (!this.file) {
+      alert('Veuillez sélectionner un fichier.');
+      return;
+    }
+
+    this.loginService.importExcel(this.file).subscribe({
+      next: (res: any) => {
+        alert(`Importation réussie ! ${res.length} produits ajoutés.`);
+        this.fileName = '';
+        this.message = '';
+        this.router.navigate(['/produit']);
+
+      },
+      error: (err) => {
+        alert('Erreur lors de l\'importation du fichier.');
+        console.error(err);
+      }
+    });
+  }
+
 }

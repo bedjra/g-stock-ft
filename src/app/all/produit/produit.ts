@@ -41,6 +41,7 @@ export class ProduitComponent implements OnInit {
       this.getProduits(); // recharge la liste
       this.closeModal();
       this.nouveauProduit = { nom: '', ref: '', qte: 0, prix: 0 };
+      alert('Produit ajouté avec succès !');
     });
   }
 
@@ -52,7 +53,7 @@ export class ProduitComponent implements OnInit {
     } else {
       this.stockService.searchProduit(this.searchTerm).subscribe(
         data => this.produits = data,
-        () => this.produits = [] 
+        () => this.produits = []
       );
     }
   }

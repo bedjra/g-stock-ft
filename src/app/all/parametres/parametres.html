@@ -118,16 +118,25 @@
 
 
 <div class="container" *ngIf="ongletActif === 'importation' ">
+  <div class="section">
+    <h3 class="section-title">Importer des produits</h3>
+    <p class="section-desc">
+      Ajoutez ou mettez à jour des produits en masse à partir d'un fichier Excel (.xlsx, .csv).
+    </p>
+<br>
+<br>
+    <label class="btn-upload">
+      📂 Importer un fichier
+      <input type="file" hidden (change)="onFileSelected($event)" accept=".xlsx,.csv" />
+    </label>
 
-    <div class="section">
-        <h3 class="section-title">Importer des produits</h3>
-        <p class="section-desc">
-            Ajoutez ou mettez à jour des produits en masse à partir d'un fichier Excel (.xlsx, .csv).
-        </p>
-
-        <label class="btn-upload">
-            📂 Importer un fichier
-            <input type="file" hidden accept=".xlsx,.csv" />
-        </label>
+    <div *ngIf="fileName">
+      <p>Fichier sélectionné : {{ fileName }}</p>
+      <button (click)="uploadFile()" class="btn-upload-confirm">Importer</button>
     </div>
+
+    <div *ngIf="message" class="upload-message">
+      {{ message }}
+    </div>
+  </div>
 </div>

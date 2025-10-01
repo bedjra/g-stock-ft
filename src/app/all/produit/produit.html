@@ -3,15 +3,14 @@
   <div class="header">
     <h1>Gestion des Produits</h1>
 
-    <!-- Recherche -->
     <div class="search-box">
-      <input type="text" placeholder="Rechercher par nom ou référence..." [(ngModel)]="searchTerm" (input)="rechercherProduit()" />
+      <input type="text" placeholder="Rechercher par nom ou référence..." [(ngModel)]="searchTerm"
+        (input)="rechercherProduit()" />
     </div>
 
     <button class="btn" (click)="openModal()">+ Ajouter</button>
   </div>
 
-  <!-- Tableau des produits -->
   <div class="table-container" *ngIf="produits && produits.length > 0; else noData">
     <table>
       <thead>
@@ -21,6 +20,7 @@
           <th>Référence</th>
           <th>Quantité</th>
           <th>Prix</th>
+          <th>Act</th>
         </tr>
       </thead>
       <tbody>
@@ -30,6 +30,17 @@
           <td data-label="Référence">{{ produit.ref }}</td>
           <td data-label="Quantité">{{ produit.qte }}</td>
           <td data-label="Prix Unitaire">{{ produit.prix | number:'1.0-0' }}</td>
+          <td>
+            <button  type="button" class="btn btn-warning btn-sm me-1"
+              title="Modifier">
+              <i class="fas fa-pencil-alt"></i>
+            </button>
+
+            <button  type="button" class="btn "
+              title="Supprimer">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

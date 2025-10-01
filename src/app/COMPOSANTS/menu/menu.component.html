@@ -4,34 +4,40 @@
       <div class="logo">G-STOCK</div>
     </h3>
   </div>
-<nav class="sidebar-menu">
-  <a class="menu-item" routerLink="/dashboard" routerLinkActive="active">
-    <i class="fas fa-tachometer-alt"></i>
-    <span class="menu-text" [class.hidden]="collapsed">Tableau de Bord</span>
-  </a>
+  <nav class="sidebar-menu">
+    <a class="menu-item" routerLink="/dashboard" routerLinkActive="active">
+      <i class="fas fa-tachometer-alt"></i>
+      <span class="menu-text" [class.hidden]="collapsed">Tableau de Bord</span>
+    </a>
 
-  <a class="menu-item" routerLink="/produit" routerLinkActive="active">
-    <i class="fa-solid fa-box"></i>
-    <span class="menu-text" [class.hidden]="collapsed">Produits</span>
-  </a>
+    <a class="menu-item" routerLink="/produit" routerLinkActive="active">
+      <i class="fa-solid fa-box"></i>
+      <span class="menu-text" [class.hidden]="collapsed">Produits</span>
+    </a>
 
-  <a class="menu-item" routerLink="/pdv" routerLinkActive="active">
-    <i class="fa-solid fa-basket-shopping"></i>
-    <span class="menu-text" [class.hidden]="collapsed">Point de Vente</span>
-  </a>
+    <a class="menu-item" routerLink="/pdv" routerLinkActive="active">
+      <i class="fa-solid fa-basket-shopping"></i>
+      <span class="menu-text" [class.hidden]="collapsed">Point de Vente</span>
+    </a>
 
-  <a class="menu-item" routerLink="/inventaire" routerLinkActive="active">
-    <i class="fa-solid fa-clipboard-list"></i>
-    <span class="menu-text" [class.hidden]="collapsed">Inventaires</span>
-  </a>
+    <a class="menu-item" routerLink="/inventaire" routerLinkActive="active">
+      <i class="fa-solid fa-clipboard-list"></i>
+      <span class="menu-text" [class.hidden]="collapsed">Inventaires</span>
+    </a>
 
-  <a class="menu-item" routerLink="/reappro" routerLinkActive="active">
-    <i class="fa-solid fa-truck"></i>
-    <span class="menu-text" [class.hidden]="collapsed">Réapprovisionnement</span>
-  </a>
+    <a class="menu-item" routerLink="/reappro" routerLinkActive="active">
+      <i class="fa-solid fa-truck"></i>
+      <span class="menu-text" [class.hidden]="collapsed">Réapprovisionnement</span>
+    </a>
 
-  <a class="menu-item" routerLink="/parametre" routerLinkActive="active">
-    <i class="fas fa-cog"></i>
-    <span class="menu-text" [class.hidden]="collapsed">Paramètres</span>
-  </a>
-</nav>
+    <a class="menu-item" routerLink="/parametre" routerLinkActive="active">
+      <i class="fas fa-cog"></i>
+      <span class="menu-text" [class.hidden]="collapsed">Paramètres</span>
+    </a>
+
+    <a class="menu-item" href="#">
+      <i class="fas fa-sign-out-alt" style="color: red;"></i>
+      <span class="menu-text" [class.hidden]="collapsed">Déconnexion</span>
+    </a>
+
+  </nav>

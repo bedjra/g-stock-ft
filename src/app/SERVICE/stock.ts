@@ -43,7 +43,6 @@ export class StockService {
     return this.http.delete<void>(`${this.apiUrl}/stock/${id}`);
   }
 
-  // 🔎 Rechercher par nom ou référence
 // 🔎 Rechercher par nom ou référence
 searchProduit(term: string): Observable<Produit[]> {
   const url = `${this.apiUrl}/stock/search?nom=${term}&ref=${term}`;

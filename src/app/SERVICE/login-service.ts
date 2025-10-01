@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
+import { Produit } from './stock';
 
 export interface Utilisateur {
   id?: number;
@@ -11,7 +12,7 @@ export interface Utilisateur {
 }
 
 export interface Organisation {
-   id?: number;
+  id?: number;
   nom?: string;
   logo?: any; // byte[] venant du backend
   logoUrl?: string; // champ calculé pour Angular
@@ -66,5 +67,12 @@ export class LoginService {
     return this.http.get<Organisation>(this.baseUrl);
   }
 
+// Méthode d'import Excel corrigée
+  importExcel(file: File): Observable<Produit[]> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<Produit[]>(`${this.baseUrl}/stock/import`, formData);
+  }
 
 }

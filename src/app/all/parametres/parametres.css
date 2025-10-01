@@ -67,7 +67,6 @@
 
 .right-box {
   flex: 2 1 390px;
-  /* 2 fois plus large, min 390px */
   background-color: #f3f4f6;
   color: black;
   border-radius: 10px;
@@ -183,7 +182,7 @@ p {
 
   .right-box {
     flex-basis: 700px;
-    /* plus large */
+  background-color: #a0c8f8;
   }
 
   
@@ -200,6 +199,34 @@ p {
   font-weight: 600;
 }
 
+.btn-upload-confirm {
+  background: #3a8ef6;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-upload-confirm:hover {
+  background: #3a8ef6;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-upload-confirm:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-upload-confirm:focus {
+  outline: none;
+}
 
 
 
