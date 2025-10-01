@@ -25,24 +25,25 @@
       </thead>
       <tbody>
         <tr *ngFor="let produit of produits">
-          <td data-label="Id">{{ produit.id }}</td>
-          <td data-label="Nom du Produit">{{ produit.nom }}</td>
-          <td data-label="Référence">{{ produit.ref }}</td>
-          <td data-label="Quantité">{{ produit.qte }}</td>
-          <td data-label="Prix Unitaire">{{ produit.prix | number:'1.0-0' }}</td>
+          <td>{{ produit.id }}</td>
+          <td>{{ produit.nom }}</td>
+          <td>{{ produit.ref }}</td>
+          <td>{{ produit.qte }}</td>
+          <td>{{ produit.prix | number:'1.0-0' }}</td>
           <td>
-            <button  type="button" class="btn btn-warning btn-sm me-1"
-              title="Modifier">
+            <!-- Bouton éditer -->
+            <button type="button" class="btn btn-warning btn-sm me-1" (click)="editProduit(produit)" title="Modifier">
               <i class="fas fa-pencil-alt"></i>
             </button>
 
-            <button  type="button" class="btn "
-              title="Supprimer">
+            <!-- Bouton supprimer -->
+            <button type="button" class="btn btn-danger btn-sm" (click)="deleteProduit(produit.id!)" title="Supprimer">
               <i class="fas fa-trash"></i>
             </button>
           </td>
         </tr>
       </tbody>
+
     </table>
   </div>
 
@@ -50,27 +51,66 @@
     <p>Aucun produit trouvé.</p>
   </ng-template>
 </div>
-
 <!-- ✅ Modal -->
 <div class="modal" *ngIf="showModal">
   <div class="modal-content">
+    
+    <!-- Bouton fermeture -->
     <span class="close" (click)="closeModal()">&times;</span>
-    <h2>Ajouter un produit</h2>
 
-    <form (ngSubmit)="ajouterProduit()" #produitForm="ngForm">
-      <label>Nom</label>
-      <input type="text" name="nom" [(ngModel)]="nouveauProduit.nom" required />
+    <!-- Titre dynamique -->
+    <h2>{{ isEditing ? 'Modifier un produit' : 'Ajouter un produit' }}</h2>
 
-      <label>Référence</label>
-      <input type="text" name="reference" [(ngModel)]="nouveauProduit.ref" required />
+    <form (ngSubmit)="saveProduit()" #produitForm="ngForm">
+      
+      <!-- Champ Nom -->
+      <label for="nom">Nom</label>
+      <input 
+        id="nom"
+        type="text" 
+        name="nom" 
+        [(ngModel)]="nouveauProduit.nom" 
+        required 
+        placeholder="Nom du produit"
+      />
 
-      <label>Quantité</label>
-      <input type="number" name="quantite" [(ngModel)]="nouveauProduit.qte" required />
+      <!-- Champ Référence -->
+      <label for="ref">Référence</label>
+      <input 
+        id="ref"
+        type="text" 
+        name="reference" 
+        [(ngModel)]="nouveauProduit.ref" 
+        required 
+        placeholder="Référence"
+      />
 
-      <label>Prix Unitaire</label>
-      <input type="number" name="prixUnitaire" [(ngModel)]="nouveauProduit.prix" required />
+      <!-- Champ Quantité -->
+      <label for="qte">Quantité</label>
+      <input 
+        id="qte"
+        type="number" 
+        name="quantite" 
+        [(ngModel)]="nouveauProduit.qte" 
+        required 
+        min="1"
+      />
 
-      <button type="submit" class="btn">Enregistrer</button>
+      <!-- Champ Prix -->
+      <label for="prix">Prix Unitaire</label>
+      <input 
+        id="prix"
+        type="number" 
+        name="prixUnitaire" 
+        [(ngModel)]="nouveauProduit.prix" 
+        required 
+        min="0"
+      />
+
+      <!-- Bouton -->
+      <button type="submit" class="btn">
+        {{ isEditing ? 'Mettre à jour' : 'Enregistrer' }}
+      </button>
     </form>
   </div>
 </div>
