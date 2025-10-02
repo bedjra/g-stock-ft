@@ -1,59 +1,55 @@
 <div class="container">
-    <h2 class="title">Nouveau Réapprovisionnement</h2>
+  <h2>Nouveau Réapprovisionnement</h2>
 
-    <div class="grid">
-        <!-- Bloc gauche : Scanner un produit -->
-        <div class="card">
-            <h3 class="card-title">📦 Infos du produit</h3>
+  <div class="grid">
+    <div class="card">
+      <h3>📦 Infos du produit</h3>
 
-            <div class="form-group">
-                <label for="produit">Produit</label>
-                <select id="produit" [(ngModel)]="produitId">
-                    <option value="">Sélectionner un produit...</option>
-                    <option *ngFor="let p of produits" [value]="p.id">
-                        {{ p.nom }} - {{ p.ref }}
-                    </option>
-                </select>
-            </div>
+      <div class="form-group">
+        <label for="produit">Produit</label>
+        <select id="produit" [(ngModel)]="produitId">
+          <option value="">Sélectionner un produit...</option>
+          <option *ngFor="let p of produits" [value]="p.id">
+            {{ p.nom }} - {{ p.ref }}
+          </option>
+        </select>
+      </div>
 
-            <div class="form-group">
-                <label for="quantite">Quantité</label>
-                <input id="quantite" type="number" [(ngModel)]="quantite" min="1" />
-            </div>
+      <div class="form-group">
+        <label for="quantite">Quantité</label>
+        <input id="quantite" type="number" [(ngModel)]="quantite" min="1" />
+      </div>
 
-            <button class="btn-primary" (click)="ajouterProduit()">Ajouter</button>
-        </div>
-
-        <!-- Bloc droit : Produits de l’arrivage -->
-        <div class="card">
-            <h3 class="card-title">🚚 Produits de l’arrivage</h3>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Produit</th>
-                        <th>Quantité</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngIf="brouillonProduits.length === 0">
-                        <td colspan="3" class="empty">Aucun produit ajouté.</td>
-                    </tr>
-                    <tr *ngFor="let p of brouillonProduits">
-                        <td>{{ p.id }}</td>
-                        <td>{{ p.produit.nom }} - {{ p.produit.ref }}</td>
-                        <td>{{ p.quantite }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="footer">
-                <button class="btn-secondary">
-                    💾 Enregistrer l'arrivage du {{ today }}
-                </button>
-            </div>
-
-
-        </div>
+      <button class="btn-primary" (click)="ajouterProduit()">Ajouter</button>
     </div>
+
+    <div class="card">
+      <h3>🚚 Produits de l’arrivage</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Produit</th>
+            <th>Quantité</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="brouillonProduits.length === 0">
+            <td colspan="3" class="empty">Aucun produit ajouté.</td>
+          </tr>
+          <tr *ngFor="let p of brouillonProduits; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ p.nom }} - {{ p.ref }}</td>
+            <td>{{ p.qte }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="footer">
+        <button class="btn-secondary" (click)="enregistrerArrivage()">
+          💾 Enregistrer l'arrivage du {{ today }}
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

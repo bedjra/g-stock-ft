@@ -241,10 +241,8 @@ export class Parametres {
       next: (config: Configuration) => {
         this.organisation = config;
         this.isLoading = false;
-        console.log('Configuration chargée:', config);
       },
       error: (error: any) => {
-        console.error('Erreur lors du chargement de la configuration:', error);
         this.errorMessage = 'Impossible de charger la configuration';
         this.isLoading = false;
       }
@@ -258,6 +256,9 @@ export class Parametres {
     this.loadConfiguration();
   }
 
+genererPDF() {
+  
+}
 
 
 }

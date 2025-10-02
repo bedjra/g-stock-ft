@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { StockService } from '../../SERVICE/stock';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reappro',
@@ -11,70 +12,91 @@ import { StockService } from '../../SERVICE/stock';
   styleUrls: ['./reappro.css']
 })
 export class Reappro implements OnInit {
+
   today = new Date().toLocaleDateString('fr-FR');
 
-  // Liste produits depuis API
   produits: any[] = [];
   isLoading = true;
 
-  // Champs du formulaire
   produitId: string = '';
   quantite: number = 1;
 
-  // Liste brouillon
-  brouillonProduits: { id: number, produit: any, quantite: number }[] = [];
-  nextId = 1;
+  brouillonProduits: any[] = [];
 
-  constructor(private stockService: StockService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private stockService: StockService,
+    private cdr: ChangeDetectorRef,
+    private router: Router
+
+  ) { }
 
   ngOnInit(): void {
-    if (typeof window !== 'undefined') {
-      setTimeout(() => {
-        this.loadProduits();
-      }, 200);
-    }
+    this.loadProduits();
   }
 
   private loadProduits(): void {
     this.stockService.getProduits().subscribe({
       next: (data) => {
-        console.log('✅ Produits reçus du serveur:', data);
         this.produits = data;
         this.isLoading = false;
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('❌ Erreur lors du chargement des produits :', err);
+        console.error('Erreur chargement produits', err);
         this.isLoading = false;
         this.cdr.detectChanges();
       }
     });
   }
 
-  ajouterProduit() {
-    const produitTrouve = this.produits.find(p => p.id == this.produitId);
-
-    if (produitTrouve && this.quantite > 0) {
+  ajouterProduit(): void {
+    const produit = this.produits.find(p => p.id == this.produitId);
+    if (produit && this.quantite > 0) {
+      // On ne stocke que ce qui est nécessaire pour le payload
       this.brouillonProduits.push({
-        id: this.nextId++,
-        produit: produitTrouve,
-        quantite: this.quantite,
+        produit: { id: produit.id },
+        nom: produit.nom,
+        ref: produit.ref,
+        qte: this.quantite
       });
-
       this.produitId = '';
       this.quantite = 1;
     }
   }
 
-  enregistrerArrivage() {
+  enregistrerArrivage(): void {
     if (this.brouillonProduits.length === 0) {
-      alert("Aucun produit à enregistrer !");
+      alert('Aucun produit à enregistrer !');
       return;
     }
 
-    console.log("📦 Arrivage envoyé :", this.brouillonProduits);
-    alert("✅ Arrivage enregistré avec succès !");
-    this.brouillonProduits = [];
-    this.nextId = 1;
+    const dateArrivage = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+
+    const payload = {
+      dateArrivage: dateArrivage,
+      produits: this.brouillonProduits.map(p => ({
+        produit: { id: p.produit.id },
+        qte: p.qte
+      }))
+    };
+
+    this.stockService.saveReappro(payload).subscribe({
+      next: (res) => {
+        alert('✅ Arrivage enregistré avec succès !');
+
+        // Vider le formulaire
+        this.brouillonProduits = [];
+        this.produitId = '';
+        this.quantite = 1;
+
+        // Rediriger vers /produits
+        this.router.navigate(['/produit']);
+      },
+      error: (err) => {
+        console.error('Erreur enregistrement', err);
+        alert('❌ Erreur lors de l’enregistrement');
+      }
+    });
   }
+
 }

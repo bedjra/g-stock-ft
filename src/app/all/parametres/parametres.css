@@ -60,7 +60,7 @@
   background-color: #f3f4f6;
   color: black;
   border-radius: 10px;
-  padding: 0  20px;
+  padding: 0 20px;
   min-width: 370px;
   box-sizing: border-box;
 }
@@ -182,10 +182,10 @@ p {
 
   .right-box {
     flex-basis: 700px;
-  background-color: #a0c8f8;
+    background-color: #a0c8f8;
   }
 
-  
+
 }
 
 
@@ -263,8 +263,10 @@ p {
 /* Partie configuration plus sobre */
 .container .left-box,
 .container .right-box {
-  background-color: #fafafa; /* plus clair que #f3f4f6 */
-  border: 1px solid #e5e7eb; /* légère bordure */
+  background-color: #fafafa;
+  /* plus clair que #f3f4f6 */
+  border: 1px solid #e5e7eb;
+  /* légère bordure */
   padding: 15px 20px;
 }
 
@@ -306,4 +308,28 @@ p {
 
 
 
+
+
+/* Container principal */
+.container {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  /* espace entre gauche et droite */
+  flex-wrap: wrap;
+  /* pour le responsive */
+  margin-top: 20px;
+}
+
+.leftbox,
+.rightbox {
+  flex: 1 1 45%;
+  /* chacune prend ~45% de la largeur */
+  background-color: #f9fafb;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  width: 50px;
+  padding-left: 10px;
+}
 

@@ -5,10 +5,10 @@
         👤 Utilisateur</a>
 
     <a (click)="ongletActif = 'config'" [ngClass]="{ 'active': ongletActif === 'config' }" class="nav-link"> <i
-            class="fas fa-cog"></i>    Configuration</a>
+            class="fas fa-cog"></i> Configuration</a>
 
-    <a (click)="ongletActif = 'importation'" [ngClass]="{ 'active': ongletActif === 'scolarite' }"
-        class="nav-link">📂  Importation</a>
+    <a (click)="ongletActif = 'importation'" [ngClass]="{ 'active': ongletActif === 'importation' }" class="nav-link">📂
+        Importation & Inventaire</a>
 
 </nav>
 
@@ -96,32 +96,38 @@
 </div>
 
 
-
+<!---
 <div class="container" *ngIf="ongletActif === 'importation' ">
-  <div class="section">
-    <h3 class="section-title">Importer des produits</h3>
-    <p class="section-desc">
-      Ajoutez ou mettez à jour des produits en masse à partir d'un fichier Excel (.xlsx, .csv).
-    </p>
-<br>
-<br>
-    <label class="btn-upload">
-      📂 Importer un fichier
-      <input type="file" hidden (change)="onFileSelected($event)" accept=".xlsx,.csv" />
-    </label>
+    <div class="section">
 
-    <div *ngIf="fileName">
-      <p>Fichier sélectionné : {{ fileName }}</p>
-      <button (click)="uploadFile()" class="btn-upload-confirm">Importer</button>
-    </div>
+       
 
-    <div *ngIf="message" class="upload-message">
-      {{ message }}
+        <h3 class="section-title">Importer des produits</h3>
+         <button (click)="genererPDF()" class="btn-generate-pdf">
+            📄 Générer PDF de l'inventaire
+        </button>
+        <p class="section-desc">
+            Ajoutez ou mettez à jour des produits en masse à partir d'un fichier Excel (.xlsx, .csv).
+        </p>
+        <br>
+        <br>
+        <label class="btn-upload">
+            📂 Importer un fichier
+            <input type="file" hidden (change)="onFileSelected($event)" accept=".xlsx,.csv" />
+        </label>
+
+        <div *ngIf="fileName">
+            <p>Fichier sélectionné : {{ fileName }}</p>
+            <button (click)="uploadFile()" class="btn-upload-confirm">Importer</button>
+        </div>
+
+        <div *ngIf="message" class="upload-message">
+            {{ message }}
+        </div>
     </div>
-  </div>
 </div>
 
-
+-->
 
 <div class="container" *ngIf="ongletActif === 'config'">
     <div class="left-box">
@@ -129,12 +135,61 @@
         </div>
     </div>
 
-        <div class="preview-box" *ngIf="organisation.nom ">
-            <p><strong>Nom :</strong> {{ organisation.nom }}</p>
-            <p><strong>Adresse :</strong> {{ organisation.adresse }} </p>
-            <p><strong>Téléphone1 :</strong> {{ organisation.tel1 }}</p>
-            <p><strong>Téléphone2 :</strong> {{ organisation.tel2 }}</p>
-        </div>
-        <p *ngIf="!organisation.nom && !organisation.tel1">Aucune information enregistrée.</p>
+    <div class="preview-box" *ngIf="organisation.nom ">
+        <p><strong>Nom :</strong> {{ organisation.nom }}</p>
+        <p><strong>Adresse :</strong> {{ organisation.adresse }} </p>
+        <p><strong>Téléphone1 :</strong> {{ organisation.tel1 }}</p>
+        <p><strong>Téléphone2 :</strong> {{ organisation.tel2 }}</p>
+    </div>
+    <p *ngIf="!organisation.nom && !organisation.tel1">Aucune information enregistrée.</p>
 </div>
 
+
+
+<div class="container" *ngIf="ongletActif === 'importation'">
+
+
+    <div class="leftbox">
+
+        <div class="box">
+
+           
+
+
+
+        </div>
+
+        <h4>Importer des produits</h4>
+        <p>
+            Ajoutez ou mettez à jour des produits en masse à partir d'un fichier Excel (.xlsx, .csv).
+        </p>
+        <!-- Importer un fichier -->
+        <label class="btn-upload">
+            📂 Importer un fichier
+            <input type="file" hidden (change)="onFileSelected($event)" accept=".xlsx,.csv" />
+        </label>
+
+        <div *ngIf="fileName" class="preview-box">
+            <p>Fichier sélectionné : {{ fileName }}</p>
+            <button (click)="uploadFile()" class="btn-upload-confirm">Importer</button>
+        </div>
+
+        <div *ngIf="message" class="upload-message">
+            {{ message }}
+        </div>
+    </div>
+    <div class="rightbox">
+
+         <!-- Bouton générer PDF -->
+
+            <button (click)="genererPDF()" class="submit-btn">
+                📄 Générer PDF de l'inventaire
+            </button>
+
+
+
+
+
+    </div>
+
+</div>
