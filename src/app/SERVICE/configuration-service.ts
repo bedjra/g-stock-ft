@@ -59,4 +59,11 @@ getConfiguration(): Observable<Configuration> {
     }
     return window.btoa(binary);
   }
+
+
+   genererPDF(): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/pdf`, { responseType: 'blob' });
+  }
+
+  
 }

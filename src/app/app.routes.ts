@@ -5,7 +5,6 @@ import { BaseComponent } from './COMPOSANTS/base/base.component';
 import { Parametres } from './all/parametres/parametres';
 import { Pdv } from './all/pdv/pdv';
 import { Reappro } from './all/reappro/reappro';
-import { Inventaire } from './all/inventaire/inventaire';
 import { ProduitComponent } from './all/produit/produit';
 
 export const routes: Routes = [
@@ -19,7 +18,6 @@ export const routes: Routes = [
             { path: 'dashboard', component: DashboardComponent },
             { path: 'pdv', component: Pdv },
             { path: 'reappro', component: Reappro },
-            { path: 'inventaire', component: Inventaire },
             { path: 'produit', component: ProduitComponent },
             { path: 'parametre', component: Parametres },
         ],

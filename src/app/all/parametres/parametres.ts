@@ -216,7 +216,7 @@ export class Parametres {
     });
   }
 
-// Propriétés nécessaires pour le template
+  // Propriétés nécessaires pour le template
   organisation: Configuration = {
     nom: '',
     adresse: '',
@@ -224,7 +224,7 @@ export class Parametres {
     tel2: '',
     logoUrl: ''
   };
-  
+
   errorMessage: string = '';
 
 
@@ -256,9 +256,16 @@ export class Parametres {
     this.loadConfiguration();
   }
 
-genererPDF() {
-  
-}
+  genererPDF() {
+    this.configService.genererPDF().subscribe((data: Blob) => {
+      const fileURL = window.URL.createObjectURL(data);
+      const a = document.createElement('a');
+      a.href = fileURL;
+      a.download = 'inventaire.pdf'; // le nom du fichier téléchargé
+      a.click();
+      window.URL.revokeObjectURL(fileURL);
+    });
+  }
 
 
 }
