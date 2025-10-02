@@ -11,15 +11,7 @@ export interface Utilisateur {
   role?: string;
 }
 
-export interface Organisation {
-  id?: number;
-  nom?: string;
-  logo?: any; // byte[] venant du backend
-  logoUrl?: string; // champ calculé pour Angular
-  adresse?: string;
-  tel1?: string;
-  tel2?: string;
-}
+
 
 
 @Injectable({
@@ -63,9 +55,7 @@ export class LoginService {
   }
 
 
-  getOrganisation(): Observable<Organisation> {
-    return this.http.get<Organisation>(this.baseUrl);
-  }
+
 
 // Méthode d'import Excel corrigée
   importExcel(file: File): Observable<Produit[]> {

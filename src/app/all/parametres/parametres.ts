@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, NgModel } from '@angular/forms';
 import { LoginService } from '../../SERVICE/login-service';
 import { RouterModule } from '@angular/router';
+import { Configuration, ConfigurationService } from '../../SERVICE/configuration-service';
 
 @Component({
   selector: 'app-parametres',
@@ -38,12 +39,14 @@ export class Parametres {
 
   constructor(
     private loginService: LoginService,
+    private configService: ConfigurationService,
     private cdr: ChangeDetectorRef,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     this.chargerUtilisateurs();
+    this.loadConfiguration();
 
 
   }
@@ -177,20 +180,6 @@ export class Parametres {
     }
   }
 
-
-  organisation: any = {
-    nom: '',
-    logoUrl: '',
-    adresse: '',
-    ville: '',
-    telephone: '',
-    email: ''
-  };
-
-  onSubmit() {
-
-  }
-
   file!: File;
   fileName: string = '';
   message: string = '';
@@ -226,5 +215,49 @@ export class Parametres {
       }
     });
   }
+
+// Propriétés nécessaires pour le template
+  organisation: Configuration = {
+    nom: '',
+    adresse: '',
+    tel1: '',
+    tel2: '',
+    logoUrl: ''
+  };
+  
+  errorMessage: string = '';
+
+
+
+
+  /**
+   * Charge la configuration depuis le backend
+   */
+  loadConfiguration(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    this.configService.getConfiguration().subscribe({
+      next: (config: Configuration) => {
+        this.organisation = config;
+        this.isLoading = false;
+        console.log('Configuration chargée:', config);
+      },
+      error: (error: any) => {
+        console.error('Erreur lors du chargement de la configuration:', error);
+        this.errorMessage = 'Impossible de charger la configuration';
+        this.isLoading = false;
+      }
+    });
+  }
+
+  /**
+   * Rafraîchit la configuration
+   */
+  refreshConfiguration(): void {
+    this.loadConfiguration();
+  }
+
+
 
 }

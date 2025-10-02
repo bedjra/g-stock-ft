@@ -95,26 +95,6 @@
     </div>
 </div>
 
-<div class="container" *ngIf="ongletActif === 'config'">
-    <div class="left-box">
-        <!-- Logo de l'organisation -->
-        <div *ngIf="organisation.logoUrl" class="preview-logo">
-            <img [src]="organisation.logoUrl" alt="Logo organisation" style="max-width:150px;">
-        </div>
-    </div>
-
-    <div class="right-box">
-        <h4>Aperçu de l'organisation</h4>
-        <div class="preview-box" *ngIf="organisation.nom ">
-            <p><strong>Nom :</strong> {{ organisation.nom }}</p>
-            <p><strong>Adresse :</strong> {{ organisation.adresse }} </p>
-            <p><strong>Téléphone1 :</strong> {{ organisation.tel1 }}</p>
-            <p><strong>Téléphone2 :</strong> {{ organisation.tel2 }}</p>
-        </div>
-        <p *ngIf="!organisation.nom && !organisation.tel1">Aucune information enregistrée.</p>
-    </div>
-</div>
-
 
 
 <div class="container" *ngIf="ongletActif === 'importation' ">
@@ -140,3 +120,21 @@
     </div>
   </div>
 </div>
+
+
+
+<div class="container" *ngIf="ongletActif === 'config'">
+    <div class="left-box">
+        <div *ngIf="organisation.logoUrl" class="preview-logo">
+        </div>
+    </div>
+
+        <div class="preview-box" *ngIf="organisation.nom ">
+            <p><strong>Nom :</strong> {{ organisation.nom }}</p>
+            <p><strong>Adresse :</strong> {{ organisation.adresse }} </p>
+            <p><strong>Téléphone1 :</strong> {{ organisation.tel1 }}</p>
+            <p><strong>Téléphone2 :</strong> {{ organisation.tel2 }}</p>
+        </div>
+        <p *ngIf="!organisation.nom && !organisation.tel1">Aucune information enregistrée.</p>
+</div>
+

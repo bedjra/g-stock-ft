@@ -11,8 +11,8 @@
     <button class="btn" (click)="openModal()">+ Ajouter</button>
   </div>
 
-  <div class="table-container" *ngIf="produits && produits.length > 0; else noData">
-    <table>
+  <div *ngIf="!isLoading" class="table-container">
+    <table *ngIf="produits.length > 0; else noData">
       <thead>
         <tr>
           <th>Id</th>
@@ -43,18 +43,23 @@
           </td>
         </tr>
       </tbody>
-
     </table>
   </div>
 
+  <!-- Template affiché si pas de produits -->
   <ng-template #noData>
-    <p>Aucun produit trouvé.</p>
+    <div class="text-muted text-center p-3">
+      <i class="fas fa-info-circle"></i> Aucun produit trouvé
+    </div>
+  </ng-template>
+
+  <p>Aucun produit trouvé.</p>
   </ng-template>
 </div>
 <!-- ✅ Modal -->
 <div class="modal" *ngIf="showModal">
   <div class="modal-content">
-    
+
     <!-- Bouton fermeture -->
     <span class="close" (click)="closeModal()">&times;</span>
 
@@ -62,50 +67,22 @@
     <h2>{{ isEditing ? 'Modifier un produit' : 'Ajouter un produit' }}</h2>
 
     <form (ngSubmit)="saveProduit()" #produitForm="ngForm">
-      
+
       <!-- Champ Nom -->
       <label for="nom">Nom</label>
-      <input 
-        id="nom"
-        type="text" 
-        name="nom" 
-        [(ngModel)]="nouveauProduit.nom" 
-        required 
-        placeholder="Nom du produit"
-      />
+      <input id="nom" type="text" name="nom" [(ngModel)]="nouveauProduit.nom" required placeholder="Nom du produit" />
 
       <!-- Champ Référence -->
       <label for="ref">Référence</label>
-      <input 
-        id="ref"
-        type="text" 
-        name="reference" 
-        [(ngModel)]="nouveauProduit.ref" 
-        required 
-        placeholder="Référence"
-      />
+      <input id="ref" type="text" name="reference" [(ngModel)]="nouveauProduit.ref" required placeholder="Référence" />
 
       <!-- Champ Quantité -->
       <label for="qte">Quantité</label>
-      <input 
-        id="qte"
-        type="number" 
-        name="quantite" 
-        [(ngModel)]="nouveauProduit.qte" 
-        required 
-        min="1"
-      />
+      <input id="qte" type="number" name="quantite" [(ngModel)]="nouveauProduit.qte" required min="1" />
 
       <!-- Champ Prix -->
       <label for="prix">Prix Unitaire</label>
-      <input 
-        id="prix"
-        type="number" 
-        name="prixUnitaire" 
-        [(ngModel)]="nouveauProduit.prix" 
-        required 
-        min="0"
-      />
+      <input id="prix" type="number" name="prixUnitaire" [(ngModel)]="nouveauProduit.prix" required min="0" />
 
       <!-- Bouton -->
       <button type="submit" class="btn">

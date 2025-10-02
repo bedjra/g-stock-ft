@@ -250,9 +250,6 @@ p {
 
 
 /********************users**************************************/
-
-
-
 .left-box {
   flex: 1 1 370px;
   min-width: 370px;
@@ -262,8 +259,6 @@ p {
   flex: 2 1 390px;
   overflow-x: auto;
 }
-
-
 
 /* Partie configuration plus sobre */
 .container .left-box,
@@ -293,3 +288,22 @@ p {
   margin: 6px 0;
   color: #444;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { StockService, Produit as ProduitModel } from '../../SERVICE/stock';
 
@@ -12,14 +12,14 @@ import { StockService, Produit as ProduitModel } from '../../SERVICE/stock';
 })
 export class ProduitComponent implements OnInit {
 
-  produits: ProduitModel[] = [];
-  showModal = false;
 
-  // Pour différencier ajout / édition
+  produits: ProduitModel[] = [];
+  isLoading = true;
+
+  showModal = false;
   isEditing = false;
   selectedId: number | null = null;
 
-  // Formulaire
   nouveauProduit: ProduitModel = {
     nom: '',
     ref: '',
@@ -27,16 +27,33 @@ export class ProduitComponent implements OnInit {
     prix: 0
   };
 
-  constructor(private stockService: StockService) { }
+  constructor(
+    private stockService: StockService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
-    this.getProduits();
+    if (typeof window !== 'undefined') {
+      setTimeout(() => {
+        this.loadProduits();
+      }, 200);
+    }
   }
 
-  // Charger la liste des produits
-  getProduits(): void {
-    this.stockService.getProduits().subscribe(data => {
-      this.produits = data;
+  private loadProduits(): void {
+    this.stockService.getProduits().subscribe({
+      next: (data) => {
+        console.log('✅ Produits reçus du serveur:', data);
+
+        this.produits = JSON.parse(JSON.stringify(data));
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('❌ Erreur lors du chargement des produits :', err);
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 
@@ -66,14 +83,14 @@ export class ProduitComponent implements OnInit {
     if (this.isEditing && this.selectedId !== null) {
       // 🔄 Mise à jour
       this.stockService.updateProduit(this.selectedId, this.nouveauProduit).subscribe(() => {
-        this.getProduits();
+        this.loadProduits();
         alert('Produit modifié avec succès ✅');
         this.showModal = false;
       });
     } else {
       // ➕ Ajout
       this.stockService.ajouterProduit(this.nouveauProduit).subscribe(() => {
-        this.getProduits();
+        this.loadProduits();
         this.nouveauProduit = { nom: '', ref: '', qte: 0, prix: 0 };
         alert('Produit ajouté avec succès ✅');
         this.closeModal(); 
@@ -85,7 +102,7 @@ export class ProduitComponent implements OnInit {
   deleteProduit(id: number): void {
     if (confirm('Voulez-vous vraiment supprimer ce produit ?')) {
       this.stockService.deleteProduit(id).subscribe(() => {
-        this.getProduits();
+        this.loadProduits();
         alert('Produit supprimé avec succès ❌');
         this.closeModal(); // ✅ Ajouté au cas où le modal serait ouvert
       });
@@ -96,7 +113,7 @@ export class ProduitComponent implements OnInit {
   searchTerm: string = '';
   rechercherProduit(): void {
     if (!this.searchTerm) {
-      this.getProduits();
+      this.loadProduits();
     } else {
       this.stockService.searchProduit(this.searchTerm).subscribe(
         data => this.produits = data,
