@@ -129,7 +129,7 @@
 
 -->
 
-<!-- Bloc CONFIG -->
+<!-- Bloc CONFIG --
 <div class="container" *ngIf="ongletActif === 'config'">
     <div *ngFor="let config of configurations" class="config-card">
         <h3 class="config-title">Établissement : {{ config.nom }}</h3>
@@ -167,7 +167,7 @@
     </div>
 </div>
 
-
+---->
 
 
 
@@ -209,4 +209,52 @@
 
     </div>
 
+</div>
+
+
+
+
+
+
+<div class="containe" *ngIf="ongletActif === 'config'">
+    <div *ngFor="let config of configurations" class="config-card">
+        <div class="card-content">
+            <!-- Section Logo -->
+            <div class="logo-section">
+                <div class="logo-container">
+                    <img *ngIf="config.logoUrl" [src]="config.logoUrl" class="logo-img" alt="Logo" />
+                    <div *ngIf="!config.logoUrl" class="logo-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <p class="logo-label">Logo</p>
+            </div>
+
+            <!-- Section Informations -->
+            <div class="info-section">
+                <h2 class="establishment-title">{{ config.nom }}</h2>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label class="info-label">Adresse</label>
+                        <p class="info-value">{{ config.adresse }}</p>
+                    </div>
+
+                    <div class="info-item">
+                        <label class="info-label">Téléphone 1</label>
+                        <p class="info-value">{{ config.tel1 }}</p>
+                    </div>
+
+                    <div class="info-item">
+                        <label class="info-label">Téléphone 2</label>
+                        <p class="info-value">{{ config.tel2 || '—' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
