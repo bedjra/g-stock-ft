@@ -50,7 +50,6 @@ export class StockService {
   }
 
   // Enregistrer l'arrivage
-
 saveReappro(payload: any): Observable<any> {
   return this.http.post(this.apiUrl + '/reappro', payload, { responseType: 'text' });
 }

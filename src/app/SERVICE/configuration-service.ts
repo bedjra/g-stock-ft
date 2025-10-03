@@ -27,7 +27,7 @@ export class ConfigurationService {
    * Récupère la configuration de l'organisation
    */
 getConfiguration(): Observable<Configuration> {
-  return this.http.get<Configuration>(`${this.apiUrl}`).pipe(
+  return this.http.get<Configuration>(`${this.apiUrl/config}`).pipe(
     map(config => {
       if (config.logoBase64) {
         config.logoUrl = `data:image/png;base64,${config.logoBase64}`;
@@ -37,6 +37,20 @@ getConfiguration(): Observable<Configuration> {
   );
 }
 
+et image
+    @GetMapping("/config/image")
+    public ResponseEntity<byte[]> getImage() {
+        byte[] image = stockService.getImage();
+
+        if (image == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "image/png"); // Modifier selon le format réel de l'image (ex: image/jpeg)
+
+        return new ResponseEntity<>(image, headers, HttpStatus.OK);
+    }
   /**
    * Met à jour la configuration
    */
