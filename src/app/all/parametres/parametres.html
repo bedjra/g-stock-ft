@@ -129,34 +129,51 @@
 
 -->
 
+<!-- Bloc CONFIG -->
 <div class="container" *ngIf="ongletActif === 'config'">
-    <div class="left-box">
-        <div *ngIf="organisation.logoUrl" class="preview-logo">
+    <div *ngFor="let config of configurations" class="config-card">
+        <h3 class="config-title">Établissement : {{ config.nom }}</h3>
+
+        <div class="form-row">
+            <div class="formgroup">
+                <label>Nom</label>
+                <input type="text" [value]="config.nom" readonly />
+            </div>
+            <div class="formgroup">
+                <label>Adresse</label>
+                <input type="text" [value]="config.adresse" readonly />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="formgroup">
+                <label>Téléphone 1</label>
+                <input type="text" [value]="config.tel1" readonly />
+            </div>
+            <div class="formgroup">
+                <label>Téléphone 2</label>
+                <input type="text"  [value]="config.tel2" readonly />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="formgroup">
+                <label>Logo</label>
+                <div class="logo-wrapper">
+                    <img *ngIf="config.logoUrl" [src]="config.logoUrl" class="logo-img" />
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="preview-box" *ngIf="organisation.nom ">
-        <p><strong>Nom :</strong> {{ organisation.nom }}</p>
-        <p><strong>Adresse :</strong> {{ organisation.adresse }} </p>
-        <p><strong>Téléphone1 :</strong> {{ organisation.tel1 }}</p>
-        <p><strong>Téléphone2 :</strong> {{ organisation.tel2 }}</p>
-    </div>
-    <p *ngIf="!organisation.nom && !organisation.tel1">Aucune information enregistrée.</p>
 </div>
 
 
 
+
+
 <div class="container" *ngIf="ongletActif === 'importation'">
-
-
     <div class="leftbox">
-
         <div class="box">
-
-           
-
-
-
         </div>
 
         <h4>Importer des produits</h4>
@@ -180,11 +197,11 @@
     </div>
     <div class="rightbox">
 
-         <!-- Bouton générer PDF -->
+        <!-- Bouton générer PDF -->
 
-            <button (click)="genererPDF()" class="submit-btn">
-                📄 Générer PDF de l'inventaire
-            </button>
+        <button (click)="genererPDF()" class="submit-btn">
+            📄 Générer PDF de l'inventaire
+        </button>
 
 
 

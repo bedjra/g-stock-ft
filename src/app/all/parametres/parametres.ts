@@ -48,7 +48,8 @@ export class Parametres {
     this.chargerUtilisateurs();
     this.loadConfiguration();
 
-
+    this.loadConfiguration();
+    this.loadImage();
   }
 
   // 🔄 Charger les utilisateurs
@@ -216,7 +217,6 @@ export class Parametres {
     });
   }
 
-  // Propriétés nécessaires pour le template
   organisation: Configuration = {
     nom: '',
     adresse: '',
@@ -228,32 +228,52 @@ export class Parametres {
   errorMessage: string = '';
 
 
-
-
   /**
    * Charge la configuration depuis le backend
    */
-  loadConfiguration(): void {
-    this.isLoading = true;
-    this.errorMessage = '';
+configurations: Configuration[] = [];
 
-    this.configService.getConfiguration().subscribe({
-      next: (config: Configuration) => {
-        this.organisation = config;
-        this.isLoading = false;
+loadConfiguration(): void {
+  this.configService.getConfiguration().subscribe({
+    next: (configs: Configuration[]) => {
+      this.configurations = configs.map(c => ({
+        ...c,
+        logoUrl: c.logo ? 'data:image/png;base64,' + c.logo : ''
+      }));
+      this.isLoading = false;
+    },
+    error: () => {
+      this.errorMessage = 'Impossible de charger la configuration';
+      this.isLoading = false;
+    }
+  });
+}
+
+
+
+  /**
+   * Charge le logo depuis le backend
+   */
+  loadImage(): void {
+    this.configService.getImage().subscribe({
+      next: (imageBlob: Blob) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.organisation.logoUrl = reader.result as string; 
+        };
+        reader.readAsDataURL(imageBlob);
       },
-      error: (error: any) => {
-        this.errorMessage = 'Impossible de charger la configuration';
-        this.isLoading = false;
+      error: () => {
       }
     });
   }
 
   /**
-   * Rafraîchit la configuration
+   * Rafraîchit toute la configuration (infos + image)
    */
   refreshConfiguration(): void {
     this.loadConfiguration();
+    this.loadImage();
   }
 
   genererPDF() {
