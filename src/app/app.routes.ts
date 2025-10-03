@@ -8,7 +8,7 @@ import { Reappro } from './all/reappro/reappro';
 import { ProduitComponent } from './all/produit/produit';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full' }, // 🔁 redirection claire
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: Log },
     {
         path: '',
