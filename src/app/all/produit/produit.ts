@@ -47,8 +47,6 @@ export class ProduitComponent implements OnInit {
   private loadProduits(): void {
     this.stockService.getProduits().subscribe({
       next: (data) => {
-        console.log('✅ Produits reçus du serveur:', data);
-
         this.produits = JSON.parse(JSON.stringify(data));
         this.isLoading = false;
         this.cdr.detectChanges();

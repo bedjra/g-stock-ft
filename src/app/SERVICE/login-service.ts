@@ -23,23 +23,41 @@ export class LoginService {
   private currentUserRoleSubject = new BehaviorSubject<string | null>(null);
   currentUserRole$ = this.currentUserRoleSubject.asObservable();
 
+  private currentUserSubject = new BehaviorSubject<Utilisateur | null>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
   login(credentials: { email: string; password: string }): Observable<Utilisateur> {
-    return this.http.post<Utilisateur>(`${this.baseUrl}/user/login`, credentials).pipe(
-      map(user => {
-        if (user.role) {
-          this.currentUserRoleSubject.next(user.role); // on garde le rôle
-          localStorage.setItem("userRole", user.role); // on persiste aussi
-        }
-        return user;
-      })
-    );
+  return this.http.post<Utilisateur>(`${this.baseUrl}/user/login`, credentials).pipe(
+    map(user => {
+      if (user.role) {
+        this.currentUserRoleSubject.next(user.role);
+        localStorage.setItem("userRole", user.role);
+      }
+      this.currentUserSubject.next(user);
+      localStorage.setItem("currentUser", JSON.stringify(user)); // stocke l'utilisateur complet
+      return user;
+    })
+  );
+}
+
+getCurrenttUser(): Utilisateur | null {
+  return this.currentUserSubject.value || JSON.parse(localStorage.getItem("currentUser") || 'null');
+}
+
+
+  getCurrentRole(): string | null {
+    return this.currentUserRoleSubject.value || localStorage.getItem("userRole");
   }
 
-   getCurrentRole(): string | null {
-    return this.currentUserRoleSubject.value || localStorage.getItem("userRole");
+
+
+  logout() {
+    this.currentUserSubject.next(null);
+    this.currentUserRoleSubject.next(null);
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("userRole");
   }
   
   getAllUsers(): Observable<Utilisateur[]> {

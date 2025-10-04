@@ -1,32 +1,47 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
-interface User {
-  id?: number;
-  email: string;
-  password: string;
-  role: string;
-}
+import { LoginService, Utilisateur } from '../../SERVICE/login-service';
 
 @Component({
   selector: 'app-profil',
-  standalone: true,   // ✅ composant autonome
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './profil.html',
   styleUrls: ['./profil.css']
 })
-export class Profil {
-  user: User = {
-    email: 'test@example.com',
-    password: '******',
-    role: 'ADMIN'
-  };
+export class Profil implements OnInit {
+  user: Utilisateur | null = null;
+  showPassword = false;
 
-  constructor(private router: Router) {}
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
+  constructor(private router: Router, private loginService: LoginService) { }
+
+  ngOnInit() {
+    this.user = this.loginService.getCurrenttUser(); // récupère l'utilisateur déjà stocké
+    if (!this.user) {
+      this.router.navigate(['/login']); // redirige si pas connecté
+    }
+  }
+
+
 
   goBack() {
-    this.router.navigate(['/dashboard']); // ex: retour vers dashboard
+    this.router.navigate(['/dashboard']); // retour vers dashboard
+  }
+
+  logout() {
+    this.loginService.logout(); // supprime toutes les infos (role + user)
+    this.user = null;
+    this.router.navigate(['/login']); // redirection vers login
+  }
+
+  editProfile() {
+    // redirection vers page édition ou modal
+    console.log('Modifier profil', this.user);
   }
 }

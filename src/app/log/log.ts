@@ -51,7 +51,6 @@ export class Log {
           next: (role: string) => {
             const roleNormalise = role.trim().toUpperCase();
             localStorage.setItem('roleConnecte', roleNormalise);
-            console.log('Rôle connecté :', roleNormalise);
             this.router.navigate(['/dashboard']);
           },
           error: (err) => {

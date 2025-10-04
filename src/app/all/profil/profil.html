@@ -29,10 +29,17 @@
           <input type="text" [(ngModel)]="user.email" class="form-input" readonly />
         </div>
 
-        <div class="form-group">
+        <div class="form-group password-group">
           <label>Mot de passe 🔒</label>
-          <input type="password" [(ngModel)]="user.password" class="form-input" readonly />
+          <div class="password-wrapper">
+            <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="user.password" class="form-input"
+              readonly />
+            <button type="button" class="eye-btn" (click)="togglePassword()">
+              {{ showPassword ? '🙈' : '👁️' }}
+            </button>
+          </div>
         </div>
+
 
         <div class="form-group">
           <label>Rôle 🎭</label>
