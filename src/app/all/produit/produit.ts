@@ -5,7 +5,6 @@ import { StockService, Produit as ProduitModel } from '../../SERVICE/stock';
 
 @Component({
   selector: 'app-produit',
-  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './produit.html',
   styleUrls: ['./produit.css']

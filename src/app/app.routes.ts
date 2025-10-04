@@ -6,6 +6,7 @@ import { Parametres } from './all/parametres/parametres';
 import { Pdv } from './all/pdv/pdv';
 import { Reappro } from './all/reappro/reappro';
 import { ProduitComponent } from './all/produit/produit';
+import { Detail } from './all/detail/detail';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -20,6 +21,8 @@ export const routes: Routes = [
             { path: 'reappro', component: Reappro },
             { path: 'produit', component: ProduitComponent },
             { path: 'parametre', component: Parametres },
+            { path: 'detail', component: Detail },
+
         ],
     },
 ];

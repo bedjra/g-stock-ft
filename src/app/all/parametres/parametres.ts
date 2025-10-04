@@ -14,7 +14,7 @@ import { Configuration, ConfigurationService } from '../../SERVICE/configuration
   styleUrls: ['./parametres.css'],
 })
 export class Parametres {
-  ongletActif: string = 'utilisateur';
+  ongletActif: string = 'config';
   isLoading = true;
 
   // Formulaire
@@ -28,14 +28,16 @@ export class Parametres {
   roles: string[] = ['admin', 'secretaire'];
   passwordVisible: boolean = false;
   utilisateurs: any[] = [];
-  roleConnecte: string | null = null;
-
+  roleConnecte: string = '';  // <-- ici
   // Edition
   isEditMode: boolean = false;
   editIndex: number = -1;
 
   // Chargement
   loading: boolean = false;
+
+
+
 
   constructor(
     private loginService: LoginService,
@@ -50,6 +52,24 @@ export class Parametres {
 
     this.loadConfiguration();
     this.loadImage();
+
+    const email = localStorage.getItem('currentUserEmail');
+    if (email) {
+      this.loginService.getRoleByEmail(email).subscribe({
+        next: role => {
+          this.roleConnecte = role.trim().toUpperCase(); // on normalise
+        },
+        error: () => {
+          console.warn('Impossible de récupérer le rôle');
+        }
+      });
+    }
+
+    // Lire le rôle depuis le localStorage
+    const role = localStorage.getItem('roleConnecte');
+    if (role) {
+      this.roleConnecte = role;
+    }
   }
 
   // 🔄 Charger les utilisateurs
@@ -231,23 +251,23 @@ export class Parametres {
   /**
    * Charge la configuration depuis le backend
    */
-configurations: Configuration[] = [];
+  configurations: Configuration[] = [];
 
-loadConfiguration(): void {
-  this.configService.getConfiguration().subscribe({
-    next: (configs: Configuration[]) => {
-      this.configurations = configs.map(c => ({
-        ...c,
-        logoUrl: c.logo ? 'data:image/png;base64,' + c.logo : ''
-      }));
-      this.isLoading = false;
-    },
-    error: () => {
-      this.errorMessage = 'Impossible de charger la configuration';
-      this.isLoading = false;
-    }
-  });
-}
+  loadConfiguration(): void {
+    this.configService.getConfiguration().subscribe({
+      next: (configs: Configuration[]) => {
+        this.configurations = configs.map(c => ({
+          ...c,
+          logoUrl: c.logo ? 'data:image/png;base64,' + c.logo : ''
+        }));
+        this.isLoading = false;
+      },
+      error: () => {
+        this.errorMessage = 'Impossible de charger la configuration';
+        this.isLoading = false;
+      }
+    });
+  }
 
 
 
@@ -259,7 +279,7 @@ loadConfiguration(): void {
       next: (imageBlob: Blob) => {
         const reader = new FileReader();
         reader.onload = () => {
-          this.organisation.logoUrl = reader.result as string; 
+          this.organisation.logoUrl = reader.result as string;
         };
         reader.readAsDataURL(imageBlob);
       },

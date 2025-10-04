@@ -33,6 +33,11 @@ export class StockService {
     return this.http.get<Produit>(`${this.apiUrl}/stock/${id}`);
   }
 
+  // Récupérer un produit par nom
+  getProduitByNom(nom: string): Observable<Produit> {
+    return this.http.get<Produit>(`${this.apiUrl}/stock/nom/${nom}`);
+  }
+
   // ✏️ Modifier produit
   updateProduit(id: number, produit: Produit): Observable<Produit> {
     return this.http.put<Produit>(`${this.apiUrl}/stock/${id}`, produit);

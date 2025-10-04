@@ -1,0 +1,54 @@
+<div class="product-details-container" *ngIf="produit">
+  <div class="header">
+    <button class="back-button" (click)="goBack()"><span>←</span></button>
+    <h1>Détails du Produit</h1>
+  </div>
+
+  <div class="content-card">
+    <div class="layout-grid">
+
+      <div class="image-section">
+        <div class="image-placeholder">
+          <div class="image-content">
+            <span class="package-icon">📦</span>
+            <p>Image du produit</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="product-header">
+          <h2 class="product-name">{{ produit.nom }}</h2>
+          <p class="product-ref">Référence: {{ produit.ref }}</p>
+        </div>
+
+        <div class="form-group">
+          <label>Nom du produit 📝</label>
+          <input type="text" [(ngModel)]="produit.nom" class="form-input" readonly  />
+        </div>
+
+        <div class="form-group">
+          <label>Référence 🏷️</label>
+          <input type="text" [(ngModel)]="produit.ref" class="form-input" readonly />
+        </div>
+
+        <div class="two-column-grid">
+          <div class="form-group">
+            <label>Quantité 📊</label>
+            <input type="number" [(ngModel)]="produit.qte" class="form-input" min="0" readonly />
+          </div>
+
+          <div class="form-group">
+            <label>Prix Unitaire 💵</label>
+            <input type="number" [(ngModel)]="produit.prix"  class="form-input" min="0" readonly />
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button class="btn btn-vente">🛒 Effectuer une vente</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

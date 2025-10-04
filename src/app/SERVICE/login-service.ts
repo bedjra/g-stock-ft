@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Produit } from './stock';
 
@@ -34,9 +34,12 @@ export class LoginService {
     return this.http.get<string[]>(`${this.baseUrl}/user/roles`);
   }
 
+
+
   getRoleByEmail(email: string): Observable<string> {
-    return this.http.get<string>(`${this.baseUrl}/user/role/${email}`);
+    return this.http.get(`${this.baseUrl}/user/role/${email}`, { responseType: 'text' });
   }
+
 
   getCurrentUser(): Observable<Utilisateur> {
     return this.http.get<Utilisateur>(`${this.baseUrl}/user/info`);
@@ -55,14 +58,13 @@ export class LoginService {
   }
 
 
-
-
-// Méthode d'import Excel corrigée
+  // Méthode d'import Excel corrigée
   importExcel(file: File): Observable<Produit[]> {
     const formData = new FormData();
     formData.append('file', file);
 
     return this.http.post<Produit[]>(`${this.baseUrl}/stock/import`, formData);
   }
+
 
 }
