@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { StockService, Produit as ProduitModel } from '../../SERVICE/stock';
+import { LoginService } from '../../SERVICE/login-service';
 
 @Component({
   selector: 'app-produit',
@@ -14,6 +15,7 @@ export class ProduitComponent implements OnInit {
 
   produits: ProduitModel[] = [];
   isLoading = true;
+  role: string | null = null;
 
   showModal = false;
   isEditing = false;
@@ -28,6 +30,7 @@ export class ProduitComponent implements OnInit {
 
   constructor(
     private stockService: StockService,
+    private loginService: LoginService,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -37,6 +40,8 @@ export class ProduitComponent implements OnInit {
         this.loadProduits();
       }, 200);
     }
+    this.role = this.loginService.getCurrentRole();
+
   }
 
   private loadProduits(): void {
@@ -92,7 +97,7 @@ export class ProduitComponent implements OnInit {
         this.loadProduits();
         this.nouveauProduit = { nom: '', ref: '', qte: 0, prix: 0 };
         alert('Produit ajouté avec succès ✅');
-        this.closeModal(); 
+        this.closeModal();
       });
     }
   }

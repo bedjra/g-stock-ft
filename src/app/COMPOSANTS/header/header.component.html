@@ -35,7 +35,9 @@
       <i class="fas fa-chevron-down"></i>
 
       <div class="dropdown-menu" [class.show]="userMenuOpen">
-        <a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profil</a>
+        <a class="dropdown-item" routerLink="/profil">
+          <i class="fas fa-user"></i> Profil
+        </a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#"><i style="color: red;" class="fas fa-sign-out-alt"></i> Déconnexion</a>
       </div>

@@ -1,24 +1,16 @@
 <nav class="onglets">
-<a *ngIf="roleConnecte !== 'SECRETAIRE'" 
-   (click)="ongletActif = 'utilisateur'" 
-   [ngClass]="{ 'active': ongletActif === 'utilisateur' }" 
-   class="nav-link">
-   👤 Utilisateur
-</a>
+    <a (click)="ongletActif = 'config'" [ngClass]="{ 'active': ongletActif === 'config' }" class="nav-link">
+        <i class="fas fa-cog"></i> Configuration
+    </a>
+    
+    <a *ngIf="roleConnecte !== 'SECRETAIRE'" (click)="ongletActif = 'utilisateur'"
+        [ngClass]="{ 'active': ongletActif === 'utilisateur' }" class="nav-link">
+        👤 Utilisateur
+    </a>
 
-
-
-  <a (click)="ongletActif = 'config'" 
-     [ngClass]="{ 'active': ongletActif === 'config' }" 
-     class="nav-link">
-     <i class="fas fa-cog"></i> Configuration
-  </a>
-
-  <a (click)="ongletActif = 'importation'" 
-     [ngClass]="{ 'active': ongletActif === 'importation' }" 
-     class="nav-link">
-     📂 Importation & Inventaire
-  </a>
+    <a (click)="ongletActif = 'importation'" [ngClass]="{ 'active': ongletActif === 'importation' }" class="nav-link">
+        📂 Importation & Inventaire
+    </a>
 </nav>
 
 

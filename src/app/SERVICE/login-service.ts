@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Produit } from './stock';
 
@@ -20,12 +20,28 @@ export interface Utilisateur {
 export class LoginService {
   private baseUrl = environment.apiUrl;
 
+  private currentUserRoleSubject = new BehaviorSubject<string | null>(null);
+  currentUserRole$ = this.currentUserRoleSubject.asObservable();
+
+
   constructor(private http: HttpClient) { }
 
   login(credentials: { email: string; password: string }): Observable<Utilisateur> {
-    return this.http.post<Utilisateur>(`${this.baseUrl}/user/login`, credentials);
+    return this.http.post<Utilisateur>(`${this.baseUrl}/user/login`, credentials).pipe(
+      map(user => {
+        if (user.role) {
+          this.currentUserRoleSubject.next(user.role); // on garde le rôle
+          localStorage.setItem("userRole", user.role); // on persiste aussi
+        }
+        return user;
+      })
+    );
   }
 
+   getCurrentRole(): string | null {
+    return this.currentUserRoleSubject.value || localStorage.getItem("userRole");
+  }
+  
   getAllUsers(): Observable<Utilisateur[]> {
     return this.http.get<Utilisateur[]>(`${this.baseUrl}/user`);
   }
