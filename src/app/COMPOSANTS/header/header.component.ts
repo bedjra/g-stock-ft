@@ -29,6 +29,9 @@ export class HeaderComponent {
   searchId: string = '';
   produitTrouve: Produit | null = null;
   errorMessage: string = '';
+  closeUserMenu() {
+    this.userMenuOpen = false;
+  }
 
   constructor(private router: Router,
     private stockService: StockService
@@ -98,15 +101,17 @@ export class HeaderComponent {
     console.log('Notifications clicked');
   }
 
+  goToProfil(): void {
+    this.closeUserMenu();
+    this.router.navigate(['/profil']);
+  }
+
   logout(): void {
+    this.closeUserMenu();
     localStorage.removeItem('currentUser');
-    this.userMenuOpen = false;
     this.router.navigate(['/login']);
   }
-  goToProfil(): void {
-    this.userMenuOpen = false; // ferme le menu
-    this.router.navigate(['/profil']); // redirection vers la route profil
-  }
+
 
 
   rechercherProduit() {
