@@ -34,13 +34,20 @@
       <span class="d-none d-md-inline user-name">{{ userName }}</span>
       <i class="fas fa-chevron-down"></i>
 
+    
+      <!-- Dropdown -->
       <div class="dropdown-menu" [class.show]="userMenuOpen">
-        <a class="dropdown-item" routerLink="/profil">
+        <a class="dropdown-item" href="#" (click)="goToProfil(); $event.preventDefault()">
           <i class="fas fa-user"></i> Profil
         </a>
+
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#"><i style="color: red;" class="fas fa-sign-out-alt"></i> Déconnexion</a>
+
+        <a class="dropdown-item" href="#" (click)="logout(); $event.preventDefault()">
+          <i style="color: red;" class="fas fa-sign-out-alt"></i> Déconnexion
+        </a>
       </div>
+
     </div>
   </div>
 </div>

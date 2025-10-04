@@ -57,8 +57,10 @@
   border: 1px solid #ddd;
   border-radius: 25px;
   overflow: hidden;
-  width: 100%;             /* prend toute la largeur dispo */
-  max-width: 600px;        /* limite sur les grands écrans */
+  width: 100%;
+  /* prend toute la largeur dispo */
+  max-width: 600px;
+  /* limite sur les grands écrans */
 }
 
 .search-box input {
@@ -91,18 +93,23 @@
 /* 📱 Petits écrans */
 @media (max-width: 576px) {
   .search-box {
-    max-width: 100%;   /* occupe toute la largeur */
+    max-width: 100%;
+    /* occupe toute la largeur */
   }
+
   .search-box input {
-    font-size: 12px;   /* texte un peu plus petit */
+    font-size: 12px;
+    /* texte un peu plus petit */
   }
 }
 
 /* 💻 Grands écrans */
 @media (min-width: 1200px) {
   .search-box {
-    max-width: 800px;  /* plus large sur les écrans larges */
+    max-width: 800px;
+    /* plus large sur les écrans larges */
   }
+
   .search-box input {
     font-size: 16px;
   }
@@ -143,6 +150,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  background-color: #f5f5f5;
   cursor: pointer;
   padding: 5px 15px;
   border-radius: 25px;
@@ -151,7 +159,7 @@
 }
 
 .user-profile:hover {
-  background-color: #f5f5f5;
+  background-color: #a2a2a2;
 }
 
 .user-profile.show {

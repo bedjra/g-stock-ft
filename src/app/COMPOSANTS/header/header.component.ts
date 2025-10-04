@@ -100,6 +100,11 @@ export class HeaderComponent {
     this.userMenuOpen = false;
     this.router.navigate(['/login']);
   }
+  goToProfil(): void {
+    this.userMenuOpen = false; // ferme le menu
+    this.router.navigate(['/profil']); // redirection vers la route profil
+  }
+
 
   rechercherProduit() {
     const nom = this.searchId.trim();
