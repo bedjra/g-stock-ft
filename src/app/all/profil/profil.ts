@@ -27,6 +27,6 @@ export class Profil {
   constructor(private router: Router) {}
 
   goBack() {
-    this.router.navigate(['/']); // ex: retour vers dashboard
+    this.router.navigate(['/dashboard']); // ex: retour vers dashboard
   }
 }

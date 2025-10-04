@@ -60,6 +60,9 @@ export class HeaderComponent {
           case url.startsWith('/detail') ? url : '':
             this.currentPage = 'Détail';
             break;
+          case url.startsWith('/profil') ? url : '':
+            this.currentPage = 'Profil';
+            break;
           default:
             this.currentPage = '';
 
