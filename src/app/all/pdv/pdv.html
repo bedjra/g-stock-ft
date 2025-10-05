@@ -1,1 +1,72 @@
-<p>pdv works!</p>
+<div class="container">
+
+  <!-- Section principale -->
+  <div class="main-section">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>📦 Point de Vente</h1>
+      <div class="search-bar">
+        <input type="text" class="search-input" placeholder="Rechercher un produit...">
+        <select class="category-select">
+          <option>Tout</option>
+          <option>Électronique</option>
+          <option>Alimentaire</option>
+          <option>Vêtements</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Grille de produits -->
+    <div class="products-grid">
+      <div *ngFor="let produit of produits" class="product-card" (click)="addToCart(produit)">
+        <div class="product-image"></div>
+        <div class="product-title">{{ produit.nom }}</div>
+        <div class="product-code">{{ produit.ref }}</div>
+        <div class="product-price">{{ produit.prix | number:'1.0-0' }} F CFA</div>
+        <div *ngIf="produit.qte <= 0" class="stock-badge stock-out">🚫 Hors stock</div>
+        <div *ngIf="produit.qte > 0 && produit.qte <= 4" class="stock-badge stock-warning">⚠️ {{ produit.qte }} en stock</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Section Panier -->
+  <div class="cart-section">
+    <div class="cart-header">
+      <h2>🛒 Panier <span style="color:#999; font-size:14px;">({{ cartItems.length }} article{{ cartItems.length > 1 ? 's' : '' }})</span></h2>
+    </div>
+
+    <div class="cart-items" *ngIf="cartItems.length > 0; else emptyCart">
+      <div *ngFor="let item of cartItems" class="cart-item">
+        <div class="cart-item-info">
+          <div class="cart-item-title">{{ item.nom }}</div>
+          <div class="cart-item-price">{{ item.prix | number:'1.0-0' }} F CFA</div>
+        </div>
+        <div class="cart-item-controls">
+          <button class="qty-btn" (click)="updateQuantity(item.id, -1)">−</button>
+          <span class="qty-display">{{ item.quantity }}</span>
+          <button class="qty-btn" (click)="updateQuantity(item.id, 1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #emptyCart>
+      <div class="empty-cart">
+        <svg viewBox="0 0 24 24">
+          <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+        </svg>
+        <p>Votre panier est vide</p>
+      </div>
+    </ng-template>
+
+    <div class="cart-footer" *ngIf="cartItems.length > 0">
+      <div class="cart-total">
+        <span>Total</span>
+        <span>{{ cartTotal | number:'1.0-0' }} F CFA</span>
+      </div>
+      <button class="checkout-btn" (click)="checkout()">💳 Finaliser la Vente</button>
+    </div>
+  </div>
+
+</div>
