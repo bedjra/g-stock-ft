@@ -7,25 +7,43 @@
     <div class="header">
       <h1>📦 Point de Vente</h1>
       <div class="search-bar">
-        <input type="text" class="search-input" placeholder="Rechercher un produit...">
-        <select class="category-select">
-          <option>Tout</option>
-          <option>Électronique</option>
-          <option>Alimentaire</option>
-          <option>Vêtements</option>
-        </select>
+        <input type="text" class="search-input" placeholder="Rechercher un produit..." [(ngModel)]="searchTerm"
+          (input)="filterProduits()">
       </div>
     </div>
 
+    <!-- Loading -->
+    <div *ngIf="isLoading" style="text-align: center; padding: 40px;">
+      <p style="color: #999;">Chargement des produits...</p>
+    </div>
+
     <!-- Grille de produits -->
-    <div class="products-grid">
-      <div *ngFor="let produit of produits" class="product-card" (click)="addToCart(produit)">
-        <div class="product-image"></div>
+    <div class="products-grid" *ngIf="!isLoading ">
+      <div *ngFor="let produit of filteredProduits" class="product-card" [class.out-of-stock]="isOutOfStock(produit)"
+        (click)="addToCart(produit)">
+
+        <!-- Badge de stock -->
+        <div *ngIf="getStockStatus(produit.qte) === 'out'" class="stock-badge stock-out">
+          🚫 Hors stock
+        </div>
+        <div *ngIf="getStockStatus(produit.qte) === 'low'" class="stock-badge stock-warning">
+          ⚠️ {{ produit.qte }} en stock
+        </div>
+
+        <!-- Image/Icône -->
+        <div class="product-image">
+          {{ getProductIcon(produit) }}
+        </div>
+
+        <!-- Infos produit -->
         <div class="product-title">{{ produit.nom }}</div>
         <div class="product-code">{{ produit.ref }}</div>
         <div class="product-price">{{ produit.prix | number:'1.0-0' }} F CFA</div>
-        <div *ngIf="produit.qte <= 0" class="stock-badge stock-out">🚫 Hors stock</div>
-        <div *ngIf="produit.qte > 0 && produit.qte <= 4" class="stock-badge stock-warning">⚠️ {{ produit.qte }} en stock</div>
+
+        <!-- Catégorie (optionnel) -->
+        <div *ngIf="produit.categorie" class="product-category">
+          {{ produit.categorie }}
+        </div>
       </div>
     </div>
 
@@ -34,38 +52,62 @@
   <!-- Section Panier -->
   <div class="cart-section">
     <div class="cart-header">
-      <h2>🛒 Panier <span style="color:#999; font-size:14px;">({{ cartItems.length }} article{{ cartItems.length > 1 ? 's' : '' }})</span></h2>
+      <h2>🛒 Panier
+        <span style="color:#999; font-size:14px;">
+          ({{ totalItems }} article{{ totalItems > 1 ? 's' : '' }})
+        </span>
+      </h2>
+      <button *ngIf="cartItems.length > 0" class="clear-cart-btn" (click)="clearCart()">
+        🗑️ Vider
+      </button>
     </div>
 
-    <div class="cart-items" *ngIf="cartItems.length > 0; else emptyCart">
+    <!-- Articles du panier -->
+    <div class="cart-items" *ngIf="cartItems.length > 0">
       <div *ngFor="let item of cartItems" class="cart-item">
         <div class="cart-item-info">
           <div class="cart-item-title">{{ item.nom }}</div>
-          <div class="cart-item-price">{{ item.prix | number:'1.0-0' }} F CFA</div>
+          <div class="cart-item-price">
+            {{ item.prix | number:'1.0-0' }} F CFA
+            <span *ngIf="item.quantity > 1" style="margin-left: 8px; color: #999;">
+              × {{ item.quantity }} = {{ (item.prix * item.quantity) | number:'1.0-0' }} F CFA
+            </span>
+          </div>
         </div>
         <div class="cart-item-controls">
           <button class="qty-btn" (click)="updateQuantity(item.id, -1)">−</button>
           <span class="qty-display">{{ item.quantity }}</span>
-          <button class="qty-btn" (click)="updateQuantity(item.id, 1)">+</button>
+          <button class="qty-btn" (click)="updateQuantity(item.id, 1)" [disabled]="item.quantity >= item.qte">
+            +
+          </button>
         </div>
       </div>
     </div>
 
-    <ng-template #emptyCart>
-      <div class="empty-cart">
-        <svg viewBox="0 0 24 24">
-          <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
-        </svg>
-        <p>Votre panier est vide</p>
-      </div>
-    </ng-template>
+    <!-- Panier vide -->
+    <div class="empty-cart" *ngIf="cartItems.length === 0">
+      <svg viewBox="0 0 24 24">
+        <path
+          d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
+      </svg>
+      <p>Votre panier est vide</p>
+    </div>
 
+    <!-- Footer du panier -->
     <div class="cart-footer" *ngIf="cartItems.length > 0">
-      <div class="cart-total">
-        <span>Total</span>
-        <span>{{ cartTotal | number:'1.0-0' }} F CFA</span>
+      <div class="cart-summary">
+        <div class="cart-summary-line">
+          <span>Articles</span>
+          <span>{{ totalItems }}</span>
+        </div>
+        <div class="cart-total">
+          <span>Total</span>
+          <span>{{ cartTotal | number:'1.0-0' }} F CFA</span>
+        </div>
       </div>
-      <button class="checkout-btn" (click)="checkout()">💳 Finaliser la Vente</button>
+      <button class="checkout-btn" (click)="checkout()">
+        💳 Finaliser la Vente
+      </button>
     </div>
   </div>
 

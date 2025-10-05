@@ -43,4 +43,7 @@ export class Detail implements OnInit {
   goBack(): void {
     this.router.navigate(['/produit']);
   }
+  goPdv(): void {
+    this.router.navigate(['/pdv']);
+  }
 }
