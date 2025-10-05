@@ -19,7 +19,7 @@ export class Parametres {
 
   // Formulaire
   credentials = {
-    
+
     email: '',
     password: '',
     confirmPassword: '',
@@ -58,11 +58,9 @@ export class Parametres {
     if (email) {
       this.loginService.getRoleByEmail(email).subscribe({
         next: role => {
-          this.roleConnecte = role.trim().toUpperCase(); // on normalise
+          this.roleConnecte = role.trim().toUpperCase();
+          this.cdr.detectChanges(); // force la mise à jour de l'affichage
         },
-        error: () => {
-          console.warn('Impossible de récupérer le rôle');
-        }
       });
     }
 

@@ -1,5 +1,7 @@
 <nav class="onglets">
-     <a (click)="ongletActif = 'config'" [ngClass]="{ 'active': ongletActif === 'config' }" class="nav-link">
+    
+    <a role="button" (click)="ongletActif = 'config'" [ngClass]="{ 'active': ongletActif === 'config' }"
+        class="nav-link">
         <i class="fas fa-cog"></i> Configuration
     </a>
 
