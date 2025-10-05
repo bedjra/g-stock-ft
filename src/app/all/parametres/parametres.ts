@@ -14,7 +14,7 @@ import { Configuration, ConfigurationService } from '../../SERVICE/configuration
   styleUrls: ['./parametres.css'],
 })
 export class Parametres {
-  ongletActif: string = 'config';
+  ongletActif: string = 'importation';
   isLoading = true;
 
   // Formulaire
@@ -50,8 +50,6 @@ export class Parametres {
   ngOnInit(): void {
     this.chargerUtilisateurs();
     this.loadConfiguration();
-
-    this.loadConfiguration();
     this.loadImage();
 
     const email = localStorage.getItem('currentUserEmail');
@@ -59,7 +57,7 @@ export class Parametres {
       this.loginService.getRoleByEmail(email).subscribe({
         next: role => {
           this.roleConnecte = role.trim().toUpperCase();
-          this.cdr.detectChanges(); // force la mise à jour de l'affichage
+          this.cdr.detectChanges(); 
         },
       });
     }
