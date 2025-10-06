@@ -16,7 +16,14 @@ export interface Produit {
 export class StockService {
   private apiUrl = 'http://localhost:8060/api'; // 🔗 Ne pas changer
 
+  private baseUrl = 'http://localhost:8060/api/vente';
+
+
   constructor(private http: HttpClient) { }
+
+  enregistrerVente(payload: any): Observable<any> {
+    return this.http.post<any>(this.baseUrl, payload);
+  };
 
   // ➕ Ajouter un produit
   ajouterProduit(produit: Produit): Observable<Produit> {
