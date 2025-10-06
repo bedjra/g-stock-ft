@@ -186,8 +186,6 @@ export class Pdv {
     // Appeler le backend
     this.stockService.enregistrerVente(ventePayload).subscribe({
       next: (response: any) => {
-        this.showNotification('✅ Vente finalisée avec succès !', 'success');
-
         // Mettre à jour le stock local
         this.cartItems.forEach(item => {
           const produit = this.produits.find(p => p.id === item.id);
