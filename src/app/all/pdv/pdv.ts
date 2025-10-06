@@ -184,32 +184,34 @@ export class Pdv {
     };
 
     // Appeler le backend
-    this.stockService.enregistrerVente(ventePayload).subscribe({
-      next: (response: any) => {
-        // Mettre à jour le stock local
-        this.cartItems.forEach(item => {
-          const produit = this.produits.find(p => p.id === item.id);
-          if (produit) produit.qte -= item.quantity;
-        });
+   this.stockService.enregistrerVente(ventePayload).subscribe({
+    next: (response: any) => {
+      this.showNotification('✅ Vente finalisée avec succès !', 'success');
 
-        // Vider le panier et rafraîchir la vue
-        this.cart = {};
-        this.filterProduits();
-        this.cdr.detectChanges();
+      // 🔥 Télécharger le PDF automatiquement
+      const blob = new Blob([response], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `facture_${Date.now()}.pdf`;
+      link.click();
+      window.URL.revokeObjectURL(url);
 
-        console.log('Réponse backend :', response);
-      },
-      error: (err: any) => {
-        console.error('Erreur lors de la vente :', err);
-        
-        // Afficher un message plus détaillé
-        if (err.error?.error) {
-          this.showNotification(`❌ ${err.error.error}`, 'error');
-        } else {
-          this.showNotification('❌ Erreur lors de la vente', 'error');
-        }
-      }
-    });
+      // Mettre à jour le stock local
+      this.cartItems.forEach(item => {
+        const produit = this.produits.find(p => p.id === item.id);
+        if (produit) produit.qte -= item.quantity;
+      });
+
+      this.cart = {};
+      this.filterProduits();
+      this.cdr.detectChanges();
+    },
+    error: (err: any) => {
+      console.error('Erreur lors de la vente :', err);
+      this.showNotification('❌ Erreur lors de la vente', 'error');
+    }
+  });
   }
 
   // Méthodes utilitaires pour le template
