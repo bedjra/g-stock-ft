@@ -21,9 +21,14 @@ export class StockService {
 
   constructor(private http: HttpClient) { }
 
-  enregistrerVente(payload: any): Observable<any> {
-    return this.http.post<any>(this.baseUrl, payload);
-  };
+// Supposons que c'est dans ton composant de vente
+
+
+enregistrerVente(payload: any): Observable<Blob> {
+  return this.http.post(this.baseUrl, payload, {
+    responseType: 'blob' // Important pour recevoir le PDF
+  });
+}
 
   // ➕ Ajouter un produit
   ajouterProduit(produit: Produit): Observable<Produit> {
