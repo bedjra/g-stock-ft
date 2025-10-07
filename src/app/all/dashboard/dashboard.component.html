@@ -1,22 +1,18 @@
 <div class="dashboard-cards">
   <div class="card">
     <h4>Total Produits</h4>
-    <p>245</p>
+    <p class="value">{{ totalProduits }}</p>
   </div>
 
-  <div class="card">
+  <!-- 👇 visible uniquement si rôle = ADMIN -->
+  <div class="card" *ngIf="userRole === 'ADMIN'">
     <h4>Valeur du Stock</h4>
-    <p>1 250 000 FCFA</p>
+    <p class="value">{{ valeurStock | number:'1.0-2' }} F</p>
   </div>
 
   <div class="card">
     <h4>Ventes Aujourd’hui</h4>
-    <p>38</p>
-  </div>
-
-  <div class="card alert">
-    <h4>Produits en rupture</h4>
-    <p>5</p>
+    <p class="value">{{ ventesAujourdhui }}</p>
   </div>
 </div>
 

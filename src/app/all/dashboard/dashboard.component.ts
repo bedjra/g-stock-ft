@@ -1,31 +1,60 @@
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { StockService } from '../../SERVICE/stock';
+import { LoginService } from '../../SERVICE/login-service';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { NgModel } from '@angular/forms';
-import { Configuration } from '../../SERVICE/configuration-service';
 
 @Component({
   selector: 'app-dashboard',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css',
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  totalStudents = 5000;
-  totalBulletins = 573;
-  totalPayments = 12234;
-  totalRevenue = 15500000;
-  totalEleves!: number;
+  totalProduits: number = 0;
+  valeurStock: number = 0;
+  ventesAujourdhui: number = 0;
+  userRole: string | null = null; // 👈 on garde le rôle ici
 
-  constructor() {}
+  constructor(
+    private stockService: StockService,
+    private loginService: LoginService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    // Initialisation des données
+    if (typeof window !== 'undefined') {
+      setTimeout(() => {
+        this.userRole = this.loginService.getCurrentRole(); // 👈 récupère depuis localStorage/LoginService
+        this.chargerStatistiques();
+        this.cdr.detectChanges(); // forcer Angular à détecter les changements
+      }, 200);
+    }
   }
-    organisation: Configuration = {
-      nom: '',
-      adresse: '',
-      tel1: '',
-      tel2: '',
-      logoUrl: ''
-    };
+
+  chargerStatistiques(): void {
+    this.stockService.getTotalProduits().subscribe({
+      next: (data) => {
+        this.totalProduits = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Erreur total produits:', err),
+    });
+
+    this.stockService.getValeurStock().subscribe({
+      next: (data) => {
+        this.valeurStock = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Erreur valeur stock:', err),
+    });
+
+    this.stockService.getVentesAujourdhui().subscribe({
+      next: (data) => {
+        this.ventesAujourdhui = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Erreur ventes aujourd’hui:', err),
+    });
+  }
 }

@@ -23,6 +23,9 @@ export class StockService {
 
 // Supposons que c'est dans ton composant de vente
 
+getVentesAujourdhui(): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/count`);
+  }
 
 enregistrerVente(payload: any): Observable<Blob> {
   return this.http.post(this.baseUrl, payload, {
@@ -65,6 +68,16 @@ enregistrerVente(payload: any): Observable<Blob> {
     const url = `${this.apiUrl}/stock/search?nom=${term}&ref=${term}`;
     return this.http.get<Produit[]>(url);
   }
+
+
+  getTotalProduits(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/stock/total`);
+  }
+
+  getValeurStock(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/stock/valeur`);
+  }
+
 
   // Enregistrer l'arrivage
 saveReappro(payload: any): Observable<any> {
