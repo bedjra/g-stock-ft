@@ -1,0 +1,50 @@
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.card.alert {
+  border-left: 5px solid red;
+}
+
+.dashboard-charts {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.chart {
+  flex: 1;
+  min-width: 300px;
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.dashboard-table {
+  margin-top: 2rem;
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}

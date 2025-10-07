@@ -1,15 +1,22 @@
 <div class="container">
 
   <div class="header">
-    <h1>Gestion des Produits</h1>
+  <h1>Gestion des Produits
+<br>
+    <i style="font-size: 14px;">Total :</i> {{ produits.length }} 
 
-    <div class="search-box">
-      <input type="text" placeholder="Rechercher par nom ou référence..." [(ngModel)]="searchTerm"
-        (input)="rechercherProduit()" />
-    </div>
+</h1>
 
-    <button class="btn" (click)="openModal()">+ Ajouter</button>
+
+
+  <div class="search-box">
+    <input type="text" placeholder="Rechercher par nom ou référence..." [(ngModel)]="searchTerm"
+      (input)="rechercherProduit()" />
   </div>
+
+  <button class="btn" (click)="openModal()">+ Ajouter</button>
+</div>
+
 
   <div *ngIf="!isLoading" class="table-container">
     <table *ngIf="produits.length > 0; else noData">
