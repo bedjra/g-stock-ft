@@ -1,26 +1,25 @@
 .stats-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 25px;
+  gap: 20px;
   justify-content: space-between;
   margin-top: 30px;
 }
 
-/* ---- Carte principale ---- */
+/* ---- Carte principale (plus discrète) ---- */
 .stat-card {
   flex: 1;
   min-width: 250px;
-  background-color: #fff;
-  border-radius: 16px;
-  padding: 22px 25px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-  border: none;
+  background-color: #fafafa;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #e5e5e5;
+  transition: all 0.2s ease;
 }
 
 .stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
+  border-color: #d4d4d4;
 }
 
 /* ---- Partie haute ---- */
@@ -31,71 +30,73 @@
 }
 
 .stat-info h4 {
-  font-size: 1rem;
-  color: #444;
+  font-size: 0.85rem;
+  color: #737373;
   font-weight: 500;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .stat-info h2 {
-  font-size: 1.9rem;
-  font-weight: 700;
-  color: #000;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #262626;
   margin: 0;
 }
 
-/* ---- Icône ---- */
+/* ---- Icône (plus subtile) ---- */
 .stat-icon {
-  width: 55px;
-  height: 55px;
-  border-radius: 14px;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
-  color: #fff;
+  font-size: 18px;
 }
 
 .bg-blue {
-  background-color: #e0ebff;
-  color: #2563eb;
+  background-color: #f0f4ff;
+  color: #6b7280;
 }
 
 .bg-green {
-  background-color: #d1fae5;
-  color: #059669;
+  background-color: #f0fdf4;
+  color: #6b7280;
 }
 
 .bg-yellow {
-  background-color: #fef9c3;
-  color: #ca8a04;
+  background-color: #fefce8;
+  color: #6b7280;
 }
 
 .bg-red {
-  background-color: #fee2e2;
-  color: #dc2626;
+  background-color: #fef2f2;
+  color: #6b7280;
 }
 
-/* ---- Bas de la carte ---- */
+/* ---- Bas de la carte (plus discret) ---- */
 .stat-bottom {
   display: flex;
   align-items: center;
-  margin-top: 12px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #a3a3a3;
 }
 
 .stat-bottom i {
-  margin-right: 6px;
-  font-size: 0.9rem;
+  margin-right: 5px;
+  font-size: 0.75rem;
 }
 
 .stat-bottom.up {
-  color: #16a34a;
+  color: #22c55e;
 }
 
 .stat-bottom.down {
-  color: #dc2626;
+  color: #ef4444;
 }
 
 /* ---- Responsive ---- */
