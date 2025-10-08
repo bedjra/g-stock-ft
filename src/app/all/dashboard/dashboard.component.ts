@@ -59,14 +59,16 @@ export class DashboardComponent implements OnInit {
       error: (err) => console.error('Erreur ventes aujourd’hui:', err),
     });
 
+    // 🔹 Appel des 3 dernières ventes
+  this.stockService.getVentesRecentes().subscribe({
+    next: (data) => {
+      this.ventesRecentes = data;
+      this.cdr.detectChanges();
+    },
+    error: (err) => console.error('Erreur récupération dernières ventes:', err),
+  });
 
-   this.stockService.getVentesRecentesUtilisateur().subscribe({
-  next: (ventes) => {
-    this.ventesRecentes = ventes;
-    this.cdr.detectChanges(); // met à jour la vue si nécessaire
-  },
-  error: (err) => console.error('Erreur ventes récentes:', err)
-});
+  
 
 
   }

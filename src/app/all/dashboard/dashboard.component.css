@@ -105,3 +105,51 @@
     flex-direction: column;
   }
 }
+
+
+/* Style général du tableau */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Poppins', sans-serif;
+  margin-top: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style des entêtes */
+thead th {
+  background-color: #888888; /* gris */
+  color: white;
+  padding: 15px 12px; /* plus d'espace */
+  text-align: left;
+  font-weight: 500;
+}
+
+/* Style des cellules */
+tbody td {
+  padding: 12px 12px; /* plus d'espace horizontal et vertical */
+  border-bottom: 1px solid #ddd;
+  vertical-align: top; /* alignement en haut si plusieurs lignes dans une cellule */
+  word-break: break-word; /* pour éviter que le texte dépasse */
+}
+
+/* Lignes alternées */
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Effet hover */
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Produits et quantités */
+tbody td div {
+  margin-bottom: 6px; /* un peu plus d'espace entre les produits */
+}
+
+/* Bordures arrondies sur le tableau */
+table {
+  border-radius: 8px;
+  overflow: hidden;
+}

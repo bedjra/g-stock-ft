@@ -31,10 +31,9 @@ getMontantTotalVentesAujourdhui(): Observable<number> {
     return this.http.get<number>(`${this.baseUrl}/montant`);
   }
 
-getVentesRecentesUtilisateur(): Observable<any[]> {
+getVentesRecentes(): Observable<any[]> {
   return this.http.get<any[]>(`${this.baseUrl}/recentes`);
 }
-
 
 enregistrerVente(payload: any): Observable<Blob> {
   return this.http.post(this.baseUrl, payload, {

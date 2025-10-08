@@ -50,3 +50,33 @@
     </div>
   </div>
 </div>
+
+
+<h3>3 Dernières Ventes</h3>
+
+<table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Date de Vente</th>
+      <th>Utilisateur</th>
+      <th>Produit</th>
+      <th>Quantité</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let vente of ventesRecentes">
+      <td>{{ vente.dateVente | date:'short' }}</td>
+      <td>{{ vente.utilisateur }}</td>
+      <td>
+        <div *ngFor="let produit of vente.produits">
+          {{ produit.nom }}
+        </div>
+      </td>
+      <td>
+        <div *ngFor="let produit of vente.produits">
+          {{ produit.quantite }}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
