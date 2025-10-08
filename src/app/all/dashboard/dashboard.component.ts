@@ -14,7 +14,9 @@ export class DashboardComponent implements OnInit {
   totalProduits: number = 0;
   valeurStock: number = 0;
   ventesAujourdhui: number = 0;
-  userRole: string | null = null; // 👈 on garde le rôle ici
+  userRole: string | null = null; 
+  ventesRecentes: any[] = [];
+
 
   constructor(
     private stockService: StockService,
@@ -56,5 +58,16 @@ export class DashboardComponent implements OnInit {
       },
       error: (err) => console.error('Erreur ventes aujourd’hui:', err),
     });
+
+
+   this.stockService.getVentesRecentesUtilisateur().subscribe({
+  next: (ventes) => {
+    this.ventesRecentes = ventes;
+    this.cdr.detectChanges(); // met à jour la vue si nécessaire
+  },
+  error: (err) => console.error('Erreur ventes récentes:', err)
+});
+
+
   }
 }

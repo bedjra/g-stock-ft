@@ -21,11 +21,20 @@ export class StockService {
 
   constructor(private http: HttpClient) { }
 
-// Supposons que c'est dans ton composant de vente
 
 getVentesAujourdhui(): Observable<number> {
     return this.http.get<number>(`${this.baseUrl}/count`);
   }
+
+
+getMontantTotalVentesAujourdhui(): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/montant`);
+  }
+
+getVentesRecentesUtilisateur(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.baseUrl}/recentes`);
+}
+
 
 enregistrerVente(payload: any): Observable<Blob> {
   return this.http.post(this.baseUrl, payload, {

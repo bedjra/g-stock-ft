@@ -1,63 +1,52 @@
-<div class="dashboard-cards">
-  <div class="card">
-    <h4>Total Produits</h4>
-    <p class="value">{{ totalProduits }}</p>
+<div class="stats-container">
+  <!-- 🛍️ Produits -->
+  <div class="stat-card">
+    <div class="stat-top">
+      <div class="stat-info">
+        <h4>Produits</h4>
+        <h2>{{ totalProduits | number }}</h2>
+      </div>
+      <div class="stat-icon bg-blue">
+        <i class="fas fa-box"></i>
+      </div>
+    </div>
+    <div class="stat-bottom up">
+      <i class="fas fa-arrow-up"></i>
+      <span>Depuis hier</span>
+    </div>
   </div>
 
-  <!-- 👇 visible uniquement si rôle = ADMIN -->
-  <div class="card" *ngIf="userRole === 'ADMIN'">
-    <h4>Valeur du Stock</h4>
-    <p class="value">{{ valeurStock | number:'1.0-2' }} F</p>
+  <!-- 💰 Valeur du Stock -->
+  <div class="stat-card" *ngIf="userRole === 'ADMIN'">
+    <div class="stat-top">
+      <div class="stat-info">
+        <h4>Valeur du Stock</h4>
+        <h2>{{ valeurStock | number:'1.0-2' }} F</h2>
+      </div>
+      <div class="stat-icon bg-green">
+        <i class="fas fa-warehouse"></i>
+      </div>
+    </div>
+    <div class="stat-bottom up">
+      <i class="fas fa-arrow-up"></i>
+      <span>Depuis hier</span>
+    </div>
   </div>
 
-  <div class="card">
-    <h4>Ventes Aujourd’hui</h4>
-    <p class="value">{{ ventesAujourdhui }}</p>
+  <!-- 🛒 Ventes Aujourd’hui -->
+  <div class="stat-card">
+    <div class="stat-top">
+      <div class="stat-info">
+        <h4>Ventes Aujourd’hui</h4>
+        <h2>{{ ventesAujourdhui | number }}</h2>
+      </div>
+      <div class="stat-icon bg-red">
+        <i class="fas fa-shopping-cart"></i>
+      </div>
+    </div>
+    <div class="stat-bottom down">
+      <i class="fas fa-arrow-down"></i>
+      <span>Aujourd’hui</span>
+    </div>
   </div>
 </div>
-
-
-<div class="dashboard-charts">
-  <div class="chart">
-    <h4>Évolution des ventes</h4>
-    <canvas id="salesChart"></canvas>
-  </div>
-
-  <div class="chart">
-    <h4>Répartition du stock</h4>
-    <canvas id="stockPieChart"></canvas>
-  </div>
-</div>
-
-
-<div class="dashboard-table">
-  <h4>Activités récentes</h4>
-  <table>
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Produit</th>
-        <th>Action</th>
-        <th>Quantité</th>
-        <th>Utilisateur</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>07/10/2025</td>
-        <td>Riz parfumé</td>
-        <td>Vente</td>
-        <td>3 sacs</td>
-        <td>Marie</td>
-      </tr>
-      <tr>
-        <td>07/10/2025</td>
-        <td>Huile 1L</td>
-        <td>Réappro</td>
-        <td>24 unités</td>
-        <td>Admin</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
