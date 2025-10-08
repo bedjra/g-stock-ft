@@ -107,6 +107,8 @@
 }
 
 
+
+
 /* Style général du tableau */
 table {
   width: 100%;
@@ -118,7 +120,7 @@ table {
 
 /* Style des entêtes */
 thead th {
-  background-color: #888888; /* gris */
+  background: linear-gradient(135deg, #a9b8ca, #8fa5c0);
   color: white;
   padding: 15px 12px; /* plus d'espace */
   text-align: left;
