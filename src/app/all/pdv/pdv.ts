@@ -16,10 +16,12 @@ interface Produit {
 
 interface CartItem extends Produit {
   quantity: number;
+  remise?: number; 
 }
 
 @Component({
   selector: 'app-pdv',
+  standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './pdv.html',
   styleUrls: ['./pdv.css']
@@ -35,9 +37,13 @@ export class Pdv {
   selectedCategory = '';
   categories: string[] = [];
 
+  // ✅ Variables pour le popup de finalisation
+  showCheckoutModal = false;
+  montantPaye = 0;
+
   constructor(
     private stockService: StockService,
-     private loginService: LoginService,  // ✅ Ajouter ici
+    private loginService: LoginService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
@@ -48,20 +54,41 @@ export class Pdv {
     }
   }
 
-  // Getters
+  // 🛒 Liste des articles du panier
   get cartItems(): CartItem[] {
     return Object.values(this.cart);
   }
 
-  get cartTotal(): number {
-    return this.cartItems.reduce((sum, item) => sum + item.prix * item.quantity, 0);
+  // 💰 Sous-total avant remises
+  get cartTotalAvantRemise(): number {
+    return this.cartItems.reduce((sum, item) => sum + (item.prix * item.quantity), 0);
   }
 
+  // 🎁 Total des remises
+  get montantRemise(): number {
+    return this.cartItems.reduce((sum, item) => sum + (item.remise || 0), 0);
+  }
+
+  // ✅ Total après remises
+  get totalApresRemise(): number {
+    return this.cartItems.reduce((sum, item) => sum + ((item.prix * item.quantity) - (item.remise || 0)), 0);
+  }
+
+  // 💵 Monnaie à rendre
+  get monnaieRendue(): number {
+    return Math.max(0, this.montantPaye - this.totalApresRemise);
+  }
+
+  // 🔢 Nombre total d’articles
   get totalItems(): number {
     return this.cartItems.reduce((sum, item) => sum + item.quantity, 0);
   }
 
-  // Méthodes privées
+  get cartTotal(): number {
+  return this.cartItems.reduce((sum, item) => sum + item.prix * item.quantity, 0);
+}
+
+  // 🔹 Chargement des produits
   private loadProduits(): void {
     this.stockService.getProduits().subscribe({
       next: (data) => {
@@ -71,7 +98,7 @@ export class Pdv {
         this.isLoading = false;
         this.cdr.detectChanges();
       },
-      error: (err: any) => {
+      error: (err) => {
         console.error('❌ Erreur lors du chargement des produits :', err);
         this.isLoading = false;
         this.cdr.detectChanges();
@@ -79,6 +106,7 @@ export class Pdv {
     });
   }
 
+  // 🔹 Extraire les catégories pour le filtrage
   private extractCategories(): void {
     const categorySet = new Set<string>();
     this.produits.forEach(p => {
@@ -87,11 +115,12 @@ export class Pdv {
     this.categories = Array.from(categorySet).sort();
   }
 
+  // 🔔 Notifications console (peut être remplacé par un toast)
   private showNotification(message: string, type: 'success' | 'error' | 'warning' | 'info'): void {
     console.log(`[${type.toUpperCase()}] ${message}`);
   }
 
-  // Méthodes publiques pour le filtrage
+  // 🔎 Filtrer les produits
   filterProduits(): void {
     this.filteredProduits = this.produits.filter(produit => {
       const matchesSearch =
@@ -103,7 +132,7 @@ export class Pdv {
     });
   }
 
-  // Méthodes publiques pour le panier
+  // 🛒 Ajouter un produit au panier
   addToCart(produit: Produit): void {
     if (produit.qte <= 0) {
       this.showNotification('❌ Produit hors stock', 'error');
@@ -117,19 +146,21 @@ export class Pdv {
       }
       this.cart[produit.id].quantity++;
     } else {
-      this.cart[produit.id] = { ...produit, quantity: 1 };
+      this.cart[produit.id] = { ...produit, quantity: 1, remise: 0 };
     }
-
   }
 
+  // 🔄 Modifier la quantité d’un article
   updateQuantity(produitId: number, change: number): void {
     if (this.cart[produitId]) {
       const newQuantity = this.cart[produitId].quantity + change;
       const produit = this.produits.find(p => p.id === produitId);
+
       if (produit && newQuantity > produit.qte) {
         this.showNotification('⚠️ Stock insuffisant', 'warning');
         return;
       }
+
       if (newQuantity <= 0) {
         delete this.cart[produitId];
       } else {
@@ -138,11 +169,13 @@ export class Pdv {
     }
   }
 
+  // ❌ Supprimer un article du panier
   removeFromCart(produitId: number): void {
     delete this.cart[produitId];
     this.showNotification('🗑️ Article retiré', 'info');
   }
 
+  // 🧹 Vider le panier
   clearCart(): void {
     if (confirm('Voulez-vous vider le panier ?')) {
       this.cart = {};
@@ -150,71 +183,85 @@ export class Pdv {
     }
   }
 
-// ✅ Checkout : envoie la vente au backend
+  // ✅ Ouvrir le popup de finalisation
   checkout(): void {
     if (this.cartItems.length === 0) {
       this.showNotification('❌ Le panier est vide', 'error');
       return;
     }
 
-    const confirmation = confirm(
-      `Confirmer la vente ?\n\n` +
-      `Articles : ${this.totalItems}\n` +
-      `Total : ${this.cartTotal.toLocaleString()} F CFA`
-    );
+    this.montantPaye = this.totalApresRemise;
+    this.showCheckoutModal = true;
+  }
 
-    if (!confirmation) return;
+  // ❎ Fermer le popup
+  closeCheckoutModal(): void {
+    this.showCheckoutModal = false;
+  }
 
-    // Récupérer l'utilisateur connecté
+  // ✅ Confirmer et enregistrer la vente
+  confirmSale(): void {
+    if (this.montantPaye < this.totalApresRemise) {
+      this.showNotification('❌ Le montant payé est insuffisant', 'error');
+      return;
+    }
+
     const user = this.loginService.getCurrenttUser();
-    
+
     if (!user || !user.email) {
       this.showNotification('❌ Vous devez être connecté', 'error');
       this.router.navigate(['/login']);
       return;
     }
 
-    // Construire le payload AVEC l'email du vendeur
+    // ✅ Préparer les données à envoyer au backend
     const ventePayload = {
       emailVendeur: user.email,
+      remise: this.montantRemise,
+      montantTotal: this.totalApresRemise,
+      montantPaye: this.montantPaye,
+      monnaieRendue: this.monnaieRendue,
       lignes: this.cartItems.map(item => ({
         quantite: item.quantity,
+        remise: item.remise || 0,
         produit: { id: item.id }
       }))
     };
 
-    // Appeler le backend
-   this.stockService.enregistrerVente(ventePayload).subscribe({
-    next: (response: any) => {
-      this.showNotification('✅ Vente finalisée avec succès !', 'success');
+    // ✅ Appel au service pour enregistrer la vente
+    this.stockService.enregistrerVente(ventePayload).subscribe({
+      next: (response: any) => {
+        this.showNotification('✅ Vente finalisée avec succès !', 'success');
 
-      // 🔥 Télécharger le PDF automatiquement
-      const blob = new Blob([response], { type: 'application/pdf' });
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `facture_${Date.now()}.pdf`;
-      link.click();
-      window.URL.revokeObjectURL(url);
+        // Téléchargement automatique du PDF (facture)
+        const blob = new Blob([response], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `facture_${Date.now()}.pdf`;
+        link.click();
+        window.URL.revokeObjectURL(url);
 
-      // Mettre à jour le stock local
-      this.cartItems.forEach(item => {
-        const produit = this.produits.find(p => p.id === item.id);
-        if (produit) produit.qte -= item.quantity;
-      });
+        // Mise à jour des stocks
+        this.cartItems.forEach(item => {
+          const produit = this.produits.find(p => p.id === item.id);
+          if (produit) produit.qte -= item.quantity;
+        });
 
-      this.cart = {};
-      this.filterProduits();
-      this.cdr.detectChanges();
-    },
-    error: (err: any) => {
-      console.error('Erreur lors de la vente :', err);
-      this.showNotification('❌ Erreur lors de la vente', 'error');
-    }
-  });
+        // Nettoyage
+        this.cart = {};
+        this.showCheckoutModal = false;
+        this.filterProduits();
+        this.cdr.detectChanges();
+      },
+      error: (err: any) => {
+        console.error('Erreur lors de la vente :', err);
+        this.showNotification('❌ Erreur lors de la vente', 'error');
+      }
+    });
   }
 
-  // Méthodes utilitaires pour le template
+  // ⚙️ Méthodes utilitaires
   getStockStatus(qte: number): 'out' | 'low' | 'ok' {
     if (qte <= 0) return 'out';
     if (qte <= 400) return 'low';
@@ -227,7 +274,10 @@ export class Pdv {
 
   getProductIcon(produit: Produit): string {
     if (!produit.categorie) return '📦';
-    const categoryIcons: { [key: string]: string } = { 'Accessoires': '📦' };
+    const categoryIcons: { [key: string]: string } = {
+      'Accessoires': '📦',
+      
+    };
     return categoryIcons[produit.categorie] || '📦';
   }
 }

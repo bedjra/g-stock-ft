@@ -49,68 +49,158 @@
 
   </div>
 
-<!-- Section Panier -->
-<div class="cart-section">
-  <div class="cart-header">
-    <h2>🛒 Panier
-      <span style="color:#999; font-size:14px;">
-        ({{ totalItems }} article{{ totalItems > 1 ? 's' : '' }})
-      </span>
-    </h2>
-    <button *ngIf="cartItems.length > 0" class="clear-cart-btn" (click)="clearCart()">
-      🗑️ Vider
-    </button>
-  </div>
+  <!-- Section Panier -->
+  <div class="cart-section">
+    <div class="cart-header">
+      <h2>🛒 Panier
+        <span style="color:#999; font-size:14px;">
+          ({{ totalItems }} article{{ totalItems > 1 ? 's' : '' }})
+        </span>
+      </h2>
+      <button *ngIf="cartItems.length > 0" class="clear-cart-btn" (click)="clearCart()">
+        🗑️ Vider
+      </button>
+    </div>
 
-  <!-- Articles du panier -->
-  <div class="cart-items" *ngIf="cartItems.length > 0">
-    <div *ngFor="let item of cartItems" class="cart-item">
-      <div class="cart-item-info">
-        <div class="cart-item-title">{{ item.nom }}</div>
-        <div class="cart-item-price">
-          {{ item.prix | number:'1.0-0' }} F CFA
-          <span *ngIf="item.quantity > 1" style="margin-left: 8px; color: #999;">
-            × {{ item.quantity }} = {{ (item.prix * item.quantity) | number:'1.0-0' }} F CFA
-          </span>
+    <!-- Articles du panier -->
+    <div class="cart-items" *ngIf="cartItems.length > 0">
+      <div *ngFor="let item of cartItems" class="cart-item">
+        <div class="cart-item-info">
+          <div class="cart-item-title">{{ item.nom }}</div>
+          <div class="cart-item-price">
+            {{ item.prix | number:'1.0-0' }} F CFA
+            <span *ngIf="item.quantity > 1" style="margin-left: 8px; color: #999;">
+              × {{ item.quantity }} = {{ (item.prix * item.quantity) | number:'1.0-0' }} F CFA
+            </span>
+          </div>
+        </div>
+        <div class="cart-item-controls">
+          <button class="qty-btn" (click)="updateQuantity(item.id, -1)">−</button>
+          <span class="qty-display">{{ item.quantity }}</span>
+          <button class="qty-btn" (click)="updateQuantity(item.id, 1)" [disabled]="item.quantity >= item.qte">
+            +
+          </button>
         </div>
       </div>
-      <div class="cart-item-controls">
-        <button class="qty-btn" (click)="updateQuantity(item.id, -1)">−</button>
-        <span class="qty-display">{{ item.quantity }}</span>
-        <button class="qty-btn" (click)="updateQuantity(item.id, 1)" [disabled]="item.quantity >= item.qte">
-          +
-        </button>
+    </div>
+
+    <!-- Panier vide -->
+    <div class="empty-cart" *ngIf="cartItems.length === 0">
+      <svg viewBox="0 0 24 24">
+        <path
+          d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
+      </svg>
+      <p>Votre panier est vide</p>
+    </div>
+
+    <!-- Footer du panier -->
+    <div class="cart-footer" *ngIf="cartItems.length > 0">
+      <div class="cart-summary">
+        <div class="cart-summary-line">
+          <span>Articles</span>
+          <span>{{ totalItems }}</span>
+        </div>
+        <div class="cart-total">
+          <span>Total</span>
+          <span>{{ cartTotal | number:'1.0-0' }} F CFA</span>
+        </div>
       </div>
+
+      <!-- Bouton finaliser la vente -->
+      <button class="checkout-btn" (click)="checkout()">
+        💳 Finaliser la Vente
+      </button>
     </div>
   </div>
 
-  <!-- Panier vide -->
-  <div class="empty-cart" *ngIf="cartItems.length === 0">
-    <svg viewBox="0 0 24 24">
-      <path
-        d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
-    </svg>
-    <p>Votre panier est vide</p>
-  </div>
-
-  <!-- Footer du panier -->
-  <div class="cart-footer" *ngIf="cartItems.length > 0">
-    <div class="cart-summary">
-      <div class="cart-summary-line">
-        <span>Articles</span>
-        <span>{{ totalItems }}</span>
-      </div>
-      <div class="cart-total">
-        <span>Total</span>
-        <span>{{ cartTotal | number:'1.0-0' }} F CFA</span>
-      </div>
-    </div>
-
-    <!-- ✅ Bouton finaliser la vente -->
-    <button class="checkout-btn" (click)="checkout()">
-      💳 Finaliser la Vente
-    </button>
-  </div>
 </div>
 
+<!-- 💳 POPUP DE FINALISATION DE VENTE -->
+<div class="modal-overlay" *ngIf="showCheckoutModal" (click)="closeCheckoutModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+
+    <!-- Header -->
+    <div class="modal-header">
+      <h2>💳 Finalisation de la vente</h2>
+      <button class="modal-close" (click)="closeCheckoutModal()">✕</button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+
+      <!-- Liste des articles -->
+      <div class="modal-section">
+        <h3>📋 Articles</h3>
+        <div class="modal-items-list">
+
+          <div *ngFor="let item of cartItems" class="modal-item-detailed">
+
+            <!-- Infos produit -->
+            <div class="item-header">
+              <span class="item-name">{{ item.nom }}</span>
+              <span class="item-ref">{{ item.ref }}</span>
+            </div>
+
+            <!-- Prix, quantité et remise sur la même ligne -->
+            <div class="item-pricing-remise">
+              <div class="item-unit-price">
+                <span class="label">Prix :</span>
+                <span class="value">{{ item.prix | number:'1.0-0' }} F CFA</span>
+              </div>
+              <div class="item-quantity">
+                <span class="label">Qté :</span>
+                <span class="value">× {{ item.quantity }}</span>
+              </div>
+              <div class="item-remise-inline">
+                <label>Remise :</label>
+                <input type="number" [(ngModel)]="item.remise" min="0" [max]="item.prix * item.quantity"
+                  class="remise-input" placeholder="Ex : 1000">
+                <span class="remise-suffix">F CFA</span>
+              </div>
+            </div>
+
+            <!-- Total du produit -->
+            <div class="item-total">
+              <div class="item-final">
+                <span class="label-total">Total :</span>
+                <span class="value-total">
+                  {{ (item.prix * item.quantity) - (item.remise || 0) | number:'1.0-0' }} F CFA
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+
+      <!-- Totaux -->
+      <div class="modal-section">
+        <div class="modal-total-line">
+          <span>Sous-total</span>
+          <span class="modal-amount">{{ cartTotalAvantRemise | number:'1.0-0' }} F CFA</span>
+        </div>
+
+        <div class="modal-total-line" *ngIf="montantRemise > 0">
+          <span>Total des remises</span>
+          <span class="modal-amount-remise">- {{ montantRemise | number:'1.0-0' }} F CFA</span>
+        </div>
+
+        <div class="modal-total-line total-final">
+          <span>Total à payer</span>
+          <span class="modal-amount-final">{{ totalApresRemise | number:'1.0-0' }} F CFA</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="closeCheckoutModal()">Annuler</button>
+      <button class="btn-confirm" (click)="confirmSale()" [disabled]="montantPaye < totalApresRemise">
+        ✅ Confirmer la vente
+      </button>
+    </div>
+
+  </div>
 </div>
