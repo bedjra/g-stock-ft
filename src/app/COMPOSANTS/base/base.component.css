@@ -1,0 +1,119 @@
+/* STRUCTURE GLOBALE */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+app-root {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
+
+.layout-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 290px;
+  max-width: 30vw;
+  min-width: 200px;
+  background: linear-gradient(135deg, #a9b8ca, #8fa5c0);
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar.collapsed {
+  width: 70px;
+}
+
+/* CONTENEUR PRINCIPAL (HEADER + CONTENU) */
+.main-wrapper {
+  margin-left: 290px;
+  width: calc(100% - 290px);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s ease, width 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.sidebar.collapsed+.main-wrapper {
+  margin-left: 70px;
+  width: calc(100% - 70px);
+}
+
+/* HEADER */
+app-header {
+  height: 70px;
+  flex-shrink: 0;
+  width: 100%;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 0 0 20px 20px;
+}
+
+
+/* CONTENU PRINCIPAL (ZONE DE SCROLL) */
+.page-content {
+  padding: 0px;
+  height: calc(100vh - 70px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+/* Personnalisation de la scrollbar */
+.page-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+
+
+.page-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.page-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+@media (min-width: 1400px) {
+  .sidebar {
+    width: 300px;
+  }
+
+  .main-wrapper {
+    margin-left: 300px;
+    width: calc(100% - 300px);
+  }
+
+  .sidebar.collapsed {
+    width: 80px;
+  }
+
+  .sidebar.collapsed+.main-wrapper {
+    margin-left: 80px;
+    width: calc(100% - 80px);
+  }
+}

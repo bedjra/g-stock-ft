@@ -1,0 +1,81 @@
+<div class="stats-container">
+  <!-- 🛍️ Produits -->
+  <div class="stat-card">
+    <div class="stat-top">
+      <div class="stat-info">
+        <h4>Produits</h4>
+        <h2>{{ totalProduits | number }}</h2>
+      </div>
+      <div class="stat-icon bg-blue">
+        <i class="fas fa-box"></i>
+      </div>
+    </div>
+    <div class="stat-bottom up">
+      <i class="fas fa-arrow-up"></i>
+      <span>Depuis hier</span>
+    </div>
+  </div>
+
+  <!-- 💰 Valeur du Stock -->
+  <div class="stat-card" *ngIf="userRole === 'ADMIN'">
+    <div class="stat-top">
+      <div class="stat-info">
+        <h4>Valeur du Stock</h4>
+        <h2>{{ valeurStock | number:'1.0-2' }} F</h2>
+      </div>
+      <div class="stat-icon bg-green">
+        <i class="fas fa-warehouse"></i>
+      </div>
+    </div>
+    <div class="stat-bottom up">
+      <i class="fas fa-arrow-up"></i>
+      <span>Depuis hier</span>
+    </div>
+  </div>
+
+  <!-- 🛒 Ventes Aujourd'hui -->
+  <div class="stat-card">
+    <div class="stat-top">
+      <div class="stat-info">
+        <h4>Ventes Aujourd'hui</h4>
+        <h2>{{ ventesAujourdhui | number }}</h2>
+      </div>
+      <div class="stat-icon bg-red">
+        <i class="fas fa-shopping-cart"></i>
+      </div>
+    </div>
+    <div class="stat-bottom down">
+      <i class="fas fa-arrow-down"></i>
+      <span>Aujourd'hui</span>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<h2>Activites Recentes</h2>
+
+<table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Date de Vente</th>
+      <th>Produit</th>
+      <th>Quantité</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let vente of ventesRecentes">
+      <td>{{ vente.dateVente | date:'short' }}</td>
+      <td>
+        <div *ngFor="let produit of vente.produits">
+          {{ produit.nom }}
+        </div>
+      </td>
+      <td>
+        <div *ngFor="let produit of vente.produits">
+          {{ produit.quantite }}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

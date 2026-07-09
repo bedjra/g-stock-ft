@@ -1,0 +1,56 @@
+<div class="profile-container" *ngIf="user">
+  <div class="header">
+    <button class="back-button" (click)="goBack()"><span>←</span></button>
+    <h1>Profil Utilisateur</h1>
+  </div>
+
+  <div class="content-card">
+    <div class="layout-grid">
+
+      <!-- Section image -->
+      <div class="image-section">
+        <div class="image-placeholder">
+          <div class="image-content">
+            <span class="profile-icon">👤</span>
+            <p>Photo de profil</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section informations -->
+      <div class="form-section">
+        <div class="profile-header">
+          <h2 class="profile-name">{{ user.email }}</h2>
+          <p class="profile-role">Rôle : {{ user.role }}</p>
+        </div>
+
+        <div class="form-group">
+          <label>Email 📧</label>
+          <input type="text" [(ngModel)]="user.email" class="form-input" readonly />
+        </div>
+
+        <div class="form-group password-group">
+          <label>Mot de passe 🔒</label>
+          <div class="password-wrapper">
+            <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="user.password" class="form-input"
+              readonly />
+            <button type="button" class="eye-btn" (click)="togglePassword()">
+              {{ showPassword ? '🙈' : '👁️' }}
+            </button>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label>Rôle 🎭</label>
+          <input type="text" [(ngModel)]="user.role" class="form-input" readonly />
+        </div>
+
+        <div class="button-group">
+          <button class="btn btn-danger" (click)="logout()">🚪 Déconnexion</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

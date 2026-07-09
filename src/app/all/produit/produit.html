@@ -1,0 +1,102 @@
+<div class="container">
+
+  <div class="header">
+  <h1>Gestion des Produits
+<br>
+    <i style="font-size: 14px;">Total :</i> {{ produits.length }} 
+
+</h1>
+
+
+
+  <div class="search-box">
+    <input type="text" placeholder="Rechercher par nom ou référence..." [(ngModel)]="searchTerm"
+      (input)="rechercherProduit()" />
+  </div>
+
+  <button class="btn" (click)="openModal()">+ Ajouter</button>
+</div>
+
+
+  <div *ngIf="!isLoading" class="table-container">
+    <table *ngIf="produits.length > 0; else noData">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nom</th>
+          <th>Référence</th>
+          <th>Quantité</th>
+          <th>Prix</th>
+          <th>Act</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let produit of produits">
+          <td>{{ produit.id }}</td>
+          <td>{{ produit.nom }}</td>
+          <td>{{ produit.ref }}</td>
+          <td>{{ produit.qte }}</td>
+          <td>{{ produit.prix | number:'1.0-0' }}</td>
+          <td>
+            <!-- Bouton éditer -->
+            <button type="button" class="btn btn-warning btn-sm me-1" (click)="editProduit(produit)" title="Modifier">
+              <i class="fas fa-pencil-alt"></i>
+            </button>
+
+            <!-- Bouton supprimer (s'affiche sauf si role = SECRETAIRE) 
+            <button *ngIf="role !== 'SECRETAIRE'" type="button" class="btn btn-danger btn-sm"
+              (click)="deleteProduit(produit.id!)" title="Supprimer">
+              <i class="fas fa-trash"></i>
+            </button>
+            -->
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Template affiché si pas de produits -->
+  <ng-template #noData>
+    <div class="text-muted text-center p-3">
+      <i class="fas fa-info-circle"></i> Aucun produit trouvé
+    </div>
+  </ng-template>
+
+
+</div>
+<!-- ✅ Modal -->
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+
+    <!-- Bouton fermeture -->
+    <span class="close" (click)="closeModal()">&times;</span>
+
+    <!-- Titre dynamique -->
+    <h2>{{ isEditing ? 'Modifier un produit' : 'Ajouter un produit' }}</h2>
+
+    <form (ngSubmit)="saveProduit()" #produitForm="ngForm">
+
+      <!-- Champ Nom -->
+      <label for="nom">Nom</label>
+      <input id="nom" type="text" name="nom" [(ngModel)]="nouveauProduit.nom" required placeholder="Nom du produit" />
+
+      <!-- Champ Référence -->
+      <label for="ref">Référence</label>
+      <input id="ref" type="text" name="reference" [(ngModel)]="nouveauProduit.ref" required placeholder="Référence" />
+
+      <!-- Champ Quantité -->
+      <label for="qte">Quantité</label>
+      <input id="qte" type="number" name="quantite" [(ngModel)]="nouveauProduit.qte" required min="1" />
+
+      <!-- Champ Prix -->
+      <label for="prix">Prix Unitaire</label>
+      <input id="prix" type="number" name="prixUnitaire" [(ngModel)]="nouveauProduit.prix" required min="0" />
+
+      <!-- Bouton -->
+      <button type="submit" class="btn">
+        {{ isEditing ? 'Mettre à jour' : 'Enregistrer' }}
+      </button>
+    </form>
+  </div>
+</div>
