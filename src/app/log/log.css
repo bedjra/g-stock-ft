@@ -5,6 +5,11 @@
   box-sizing: border-box;
 }
 
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 /* Body */
 body {
   font-family: "Segoe UI", sans-serif;
@@ -14,23 +19,24 @@ body {
   flex-direction: column;
 }
 
-/* Container */
+/* Container — mobile par défaut */
 .container {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 90px;
+  padding: 16px;
+  width: 100%;
 }
 
 .logo {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   height: 50px;
-padding-top: 20px;
+  padding-top: 10px;
 }
 
 .logo-text {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   color: #121211;
   letter-spacing: 1px;
@@ -43,12 +49,12 @@ padding-top: 20px;
   margin: 5px auto;
 }
 
-/* Box */
+/* Box — colonne par défaut (mobile) */
 .box {
   display: flex;
-  width: 900px;
-  max-width: 95%;
-  height: 500px;
+  flex-direction: column;
+  width: 100%;
+  max-width: 420px;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
@@ -57,50 +63,57 @@ padding-top: 20px;
 
 /* Partie gauche */
 .left {
-  flex: 1;
   background: linear-gradient(135deg, #3a8ef6, #6c63ff);
   color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 30px;
+  padding: 24px 20px;
+  text-align: center;
+  border-radius: 10px 10px 0 0;
 }
 
 .left .logo {
-  width: 120px;
-  margin-bottom: 20px;
+  width: 100px;
+  margin-bottom: 16px;
 }
 
 .left .slogan {
-  font-size: 18px;
+  font-size: 14px;
   text-align: center;
+}
+
+.slogan-sub {
+  display: block;
+  margin-top: 8px;
 }
 
 /* Partie droite */
 .right {
-  flex: 1;
-  padding: 40px;
+  padding: 28px 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-radius: 0 0 10px 10px;
 }
 
 .right h2 {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   color: #333;
+  font-size: 18px;
 }
 
 /* Formulaire */
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 label {
   font-weight: bold;
   display: block;
-  padding: 10px;
+  font-size: 13px;
   margin-bottom: 6px;
 }
 
@@ -121,7 +134,7 @@ input:focus {
 /* Bouton */
 .submit-btn {
   width: 100%;
-  margin-top: 50px;
+  margin-top: 24px;
   padding: 12px;
   border: none;
   background: #3a8ef6;
@@ -132,14 +145,13 @@ input:focus {
   transition: 0.3s;
 }
 
-.slogan-sub {
-  display: block;
-  margin-top: 10px;
-  color: #060606;
-}
-
 .submit-btn:hover {
   background: #336ddf;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* Erreurs */
@@ -149,12 +161,19 @@ input:focus {
   margin-top: 4px;
 }
 
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
 /* Footer */
 footer {
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
   color: #777;
-  margin-top: 10px;
+  padding: 12px 16px;
 }
 
 footer .author {
@@ -162,30 +181,82 @@ footer .author {
   color: #3a8ef6;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .box {
-    flex-direction: column;
-    height: auto;
+/* ===================== TABLETTE (≥ 600px) ===================== */
+@media (min-width: 600px) {
+  .container {
+    padding: 40px 24px;
   }
 
-  .left,
-  .right {
-    flex: none;
-    width: 100%;
-    padding: 20px;
+  .logo-text {
+    font-size: 22px;
+  }
+
+  .right h2 {
+    font-size: 22px;
+  }
+}
+
+/* ===================== DESKTOP (≥ 900px) ===================== */
+@media (min-width: 900px) {
+  .container {
+    padding: 90px;
+  }
+
+  .box {
+    flex-direction: row;
+    width: 900px;
+    max-width: 95%;
+    height: 500px;
+    border-radius: 10px;
   }
 
   .left {
-    border-radius: 10px 10px 0 0;
+    flex: 1;
+    padding: 30px;
+    border-radius: 10px 0 0 10px;
+  }
+
+  .left .logo {
+    width: 120px;
+    margin-bottom: 20px;
+  }
+
+  .left .slogan {
+    font-size: 18px;
   }
 
   .right {
-    border-radius: 0 0 10px 10px;
+    flex: 1;
+    padding: 40px;
+    border-radius: 0 10px 10px 0;
+  }
+
+  .right h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  label {
+    padding: 10px 0;
+  }
+
+  .submit-btn {
+    margin-top: 50px;
   }
 }
-.error-message {
-  color: red;
-  margin-top: 10px;
-  font-weight: bold;
+
+/* ===================== GRAND ÉCRAN (≥ 1440px) ===================== */
+@media (min-width: 1440px) {
+  .box {
+    width: 1000px;
+    height: 560px;
+  }
+
+  .logo-text {
+    font-size: 28px;
+  }
+
+  .right h2 {
+    font-size: 26px;
+  }
 }

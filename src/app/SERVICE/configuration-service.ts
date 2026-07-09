@@ -23,13 +23,13 @@ export class ConfigurationService {
   private useMockFallback = environment.useMock;
 
   private mockConfig: Configuration = {
-    id: 1,
-    nom: 'G-STOCK Sarl',
-    adresse: 'Cocody, Angré 8ème Tranche, Abidjan',
-    tel1: '+225 07 00 00 00 00',
-    tel2: '+225 01 00 00 00 00',
-    logoUrl: '',
-  };
+  id: 1,
+  nom: 'G-STOCK TOGO',
+  adresse: 'Boulevard du 13 Janvier, Lomé, Togo',
+  tel1: '+228 90 00 00 00',
+  tel2: '+228 70 00 00 00',
+  logoUrl: 'assets/images/logo-boutique.png',
+};
 
   constructor(private http: HttpClient) {}
 

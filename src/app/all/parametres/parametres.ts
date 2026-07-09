@@ -14,9 +14,8 @@ import { Configuration, ConfigurationService } from '../../SERVICE/configuration
   styleUrls: ['./parametres.css'],
 })
 export class Parametres {
-  ongletActif: string = 'importation';
+  ongletActif: string = 'config';  // ✅ 'importation' → 'config'
   isLoading = true;
-
   // Formulaire
   credentials = {
 
